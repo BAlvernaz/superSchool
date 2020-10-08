@@ -16,7 +16,11 @@ export default class NewStudentForm extends React.Component {
 
   async onSubmit(ev) {
     ev.preventDefault();
+    try {
     await axios.post("http://localhost:8000/api/students/", this.state);
+    } catch (err) {
+      console.error(err)
+    }
   }
   render() {
       const { name } = this.state
@@ -24,8 +28,8 @@ export default class NewStudentForm extends React.Component {
     return (
       <div>
         <form onSubmit={onSubmit}>
-          <label htmlFor="name" className="inputLables">
-            First Name{" "}
+          <label htmlFor="name">
+            Name{" "}
             <input name="name" value={name} onChange={onChange} />
           </label>
           <input type="submit" value="Save" />

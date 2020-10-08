@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import {HashRouter as Router, Route} from 'react-router-dom'
-import NewStudentForm from './NewStudentForm'
+import NewStudentForm from './components/NewStudentForm'
+import StudentList from './components/StudentList'
 
 class App extends React.Component {
     constructor() {
@@ -19,8 +20,10 @@ class App extends React.Component {
         const { students } = this.state
         return (
             <div>
-                {students.length > 0 ? students.map(student => <div>{student.name}</div>) : <h1>"No Students Yet"</h1>}
-                <NewStudentForm />
+                <Router>
+                    <Route component={StudentList} />
+                    <Route component={NewStudentForm} />
+                </Router>
             </div>
         )
     }

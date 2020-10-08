@@ -1,5 +1,5 @@
-from students.models import Student
-from students.serializer import StudentSerializer
+from students.models import Student, School
+from students.serializer import StudentSerializer, SchoolSerializer
 from rest_framework import generics
 
 # Create your views here.
@@ -11,3 +11,11 @@ class StudentList(generics.ListCreateAPIView):
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+
+class SchoolList(generics.ListCreateAPIView):
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer
+
+class SchoolDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer
