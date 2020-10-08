@@ -7,7 +7,7 @@ const StudentList = ({students}) => {
             {students.length > 0 
              ? students.map(student => (
                 <div key={student.id}>
-                    <h3>{student.name}</h3>
+                    <h3>{student.name + " attends " + student.school}</h3>
                     <button onClick={async () => {
                         await axios.delete(`http://localhost:8000/api/students/${student.id}`)
                     }}>Remove Student</button>

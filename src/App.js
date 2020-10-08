@@ -3,21 +3,17 @@ import axios from 'axios'
 import {HashRouter as Router, Route} from 'react-router-dom'
 import NewStudentForm from './components/NewStudentForm'
 import StudentList from './components/StudentList'
+import { connect } from 'react-redux'
+import { getStudents } from './reducers/studentReducer'
+import { getSchools } from './reducers/schoolReducer'
 
 class App extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            students: []
-        }
-    }
-    async componentDidMount() {
-        const response = await axios.get("http://localhost:8000/api/students")
-        this.setState({students: response.data})
+    componentDidMount() {
+        this.props.loadStudents()
+        this.props.loadSchools()
     }
 
     render() {
-        const { students } = this.state
         return (
             <div>
                 <Router>
@@ -29,4 +25,11 @@ class App extends React.Component {
     }
 }
 
-export default App
+const dispatchToProp = dispatch => {
+    return {
+        loadStudents: () => dispatch(getStudents()),
+        loadSchools: () => dispatch(getSchools())
+    }
+}
+
+export default connect(null, dispatchToProp)(App)
