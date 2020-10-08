@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
-
-const StudentList = () => {
+import { connect } from 'react-redux'
+const StudentList = ({students}) => {
     return (
         <div>
             {students.length > 0 
@@ -16,4 +16,9 @@ const StudentList = () => {
         </div>
     )
 }
-export default StudentList
+const stateToProps = ({students}) => {
+    return {
+        students
+    }
+}
+export default connect(stateToProps)(StudentList)

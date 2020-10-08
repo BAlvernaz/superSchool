@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { stubTrue } from 'lodash'
 
 //Student Reducer Actions
 
@@ -17,4 +18,13 @@ export const getUsers = () => {
         const response = await axios.get("http://localhost:8000/api/students")
         return dispatch(_getUsers)
     }
-} 
+}
+
+export const studentReducer = (state = [], action) => {
+    switch(action.type) {
+        case GET_USERS:
+            state = [...state, ...action.students]
+            break;
+    }
+    return state
+}
