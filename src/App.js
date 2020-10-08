@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from 'axios'
+import {HashRouter as Router, Route} from 'react-router-dom'
+import NewStudentForm from './NewStudentForm'
 
 class App extends React.Component {
     constructor() {
@@ -18,6 +20,7 @@ class App extends React.Component {
         return (
             <div>
                 {students.length > 0 ? students.map(student => <div>{student.name}</div>) : <h1>"No Students Yet"</h1>}
+                <NewStudentForm />
             </div>
         )
     }
