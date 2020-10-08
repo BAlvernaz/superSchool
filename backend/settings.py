@@ -25,7 +25,6 @@ SECRET_KEY = 'c2bgpcfuyl4&d^!_kt+ob8&gye7v07il&2le-u$rljr&c)f$nf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -39,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'students',
     'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -128,3 +129,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     "./dist/",
 ]
+
+ALLOWED_HOSTS = []
+
+CORS_ORIGIN_ALLOW_ALL = True
