@@ -17,9 +17,7 @@
     ]
   },
   "scripts": {
-    "watch": "webpack --watch --mode development",
-    "pythonVenv": "",
-    "start:dev": ". ./venv/bin/activate & python manage.py runserver & npm run watch"
+    "watch": "webpack --watch --mode development"
   },
   "repository": {
     "type": "git",
@@ -39,6 +37,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "webpack": "^4.44.2",
+    "webpack-bundle-tracker": "^1.0.0-alpha.1",
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
