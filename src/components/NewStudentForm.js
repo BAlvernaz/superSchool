@@ -26,7 +26,6 @@ class NewStudentForm extends React.Component {
     const { name, schoolId } = this.state;
     const { schools } = this.props;
     const { onSubmit, onChange } = this;
-    console.log(this.state)
     return (
       <div>
         <form onSubmit={onSubmit}>

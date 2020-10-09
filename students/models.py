@@ -10,4 +10,4 @@ class School(models.Model):
 class Student(models.Model):
     id =  models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
-    school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
+    school = models.ForeignKey(School, related_name="students", on_delete=models.CASCADE, null=True)
