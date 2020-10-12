@@ -45,5 +45,8 @@
     "webpack": "^4.44.2",
     "webpack-bundle-tracker": "^1.0.0-alpha.1",
     "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.0"
   }
 }
