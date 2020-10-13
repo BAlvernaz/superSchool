@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { newStudent } from "./schoolReducer"
 //Student Reducer Actions
 
 const GET_STUDENTS = "GET_STUDENTS";
@@ -19,17 +19,17 @@ const _addStudent = (student) => ({
 
 const _removeStudent = (studentId) => ({
   type: REMOVE_STUDENT,
-  studentId
-}) 
+  studentId,
+});
 
 export const getStudents = () => {
   return async (dispatch) => {
     try {
-    const response = await axios.get("http://localhost:8000/api/students");
-    dispatch(_getStudents(response.data));
+      const response = await axios.get("http://localhost:8000/api/students");
+      dispatch(_getStudents(response.data));
     } catch (err) {
       // TODO: Change to a Error Reducer
-        console.error(err)
+      console.error(err);
     }
   };
 };
@@ -42,6 +42,8 @@ export const addStudent = (data) => {
         data
       );
       dispatch(_addStudent(response.data));
+      newStudent(response.data)
+
     } catch (err) {
       // TODO: Change to a Error Reducer
       console.error(err);
@@ -52,14 +54,14 @@ export const addStudent = (data) => {
 export const removeStudent = (studentId) => {
   return async (dispatch) => {
     try {
-    await axios.delete(`http://localhost:8000/api/students/${studentId}`)
-    dispatch(_removeStudent(studentId))
+      await axios.delete(`http://localhost:8000/api/students/${studentId}`);
+      dispatch(_removeStudent(studentId));
     } catch (err) {
       // TODO: Change to a Error Reducer
-      console.error(err)
+      console.error(err);
     }
-  }
-}
+  };
+};
 
 export const studentReducer = (state = [], action) => {
   switch (action.type) {
@@ -70,7 +72,7 @@ export const studentReducer = (state = [], action) => {
       state = [...state, action.student];
       break;
     case REMOVE_STUDENT:
-      state = state.filter(student => student.id !== action.studentId)
+      state = state.filter((student) => student.id !== action.studentId);
       break;
   }
   return state;

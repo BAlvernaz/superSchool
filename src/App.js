@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { getStudents } from './reducers/studentReducer'
 import { getSchools } from './reducers/schoolReducer'
 import Navbar from './components/Navbar'
+import SchoolList from './components/SchoolList'
 
 class App extends React.Component {
     componentDidMount() {
@@ -21,6 +22,7 @@ class App extends React.Component {
                     <Route component={Navbar} />
                     <Route component={StudentList} />
                     <Route component={NewStudentForm} />
+                    <Route component={SchoolList} />
                 </Router>
             </div>
         )
