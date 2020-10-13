@@ -41,7 +41,6 @@ const _getStudents = (students) => ({
           data
         );
         dispatch(_addStudent(response.data));
-        newStudent(response.data)
   
       } catch (err) {
         // TODO: Change to a Error Reducer
