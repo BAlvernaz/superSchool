@@ -1,11 +1,12 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { addStudent } from "../reducers/studentReducer";
+import { addStudent } from "../store";
+import { getSchools } from "../reducers/schoolReducer";
 
 class NewStudentForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: "",
       schoolId: "",
@@ -13,6 +14,11 @@ class NewStudentForm extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+  componentDidMount() {
+    console.log(this.props)
+  }
+
   onChange(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
@@ -20,10 +26,10 @@ class NewStudentForm extends React.Component {
   onSubmit(ev) {
     const { name, schoolId } = this.state;
     ev.preventDefault();
-    this.props.newStudent({name, school: schoolId});
+    this.props.newStudent({ name, school: schoolId });
   }
   render() {
-    const { name, schoolId } = this.state;
+    const { name, schoolId} = this.state;
     const { schools } = this.props;
     const { onSubmit, onChange } = this;
     return (
@@ -34,10 +40,12 @@ class NewStudentForm extends React.Component {
           </label>
           <label htmlFor="school">
             School:{" "}
-            <select name="schoolId" onChange={onChange}>
+            <select name="schoolId" value={schoolId} onChange={onChange}>
               {schools.length > 0 ? (
                 schools.map((school) => (
-                <option key={school.id} value={school.id}>{school.name}</option>
+                  <option key={school.id} value={school.id}>
+                    {school.name}
+                  </option>
                 ))
               ) : (
                 <option value={null}>No Schools to Choose From</option>
@@ -59,7 +67,7 @@ const stateToProps = ({ schools }) => {
 
 const dispatchToProps = (dispatch) => {
   return {
-    newStudent: (data) => dispatch(addStudent(data)),
+    newStudent: (data) => dispatch(addStudent(data))
   };
 };
 
