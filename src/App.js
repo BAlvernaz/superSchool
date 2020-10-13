@@ -1,11 +1,10 @@
 import React from 'react'
-import axios from 'axios'
 import {HashRouter as Router, Route} from 'react-router-dom'
 import NewStudentForm from './components/NewStudentForm'
 import StudentList from './components/StudentList'
 import { connect } from 'react-redux'
-import { getStudents } from './reducers/studentReducer'
-import { getSchools } from './reducers/schoolReducer'
+import { getStudents, getSchools } from './reducers/actions'
+
 import Navbar from './components/Navbar'
 import SchoolList from './components/SchoolList'
 

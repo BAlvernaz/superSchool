@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { removeStudent } from "../store";
+import { removeStudent } from "../reducers/actions";
 
 const StudentList = ({ students, deleteStudent }) => {
   return (

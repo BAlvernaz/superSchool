@@ -1,8 +1,8 @@
 import React from "react";
-import axios from "axios";
+
 import { connect } from "react-redux";
-import { addStudent } from "../store";
-import { getSchools } from "../reducers/schoolReducer";
+import { addStudent } from "../reducers/actions"
+
 
 class NewStudentForm extends React.Component {
   constructor(props) {
@@ -13,10 +13,6 @@ class NewStudentForm extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    console.log(this.props)
   }
 
   onChange(ev) {
