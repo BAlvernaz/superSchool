@@ -1,15 +1,22 @@
+import { Typography } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { removeStudent } from "../reducers/actions";
 
-const StudentList = ({ students, deleteStudent }) => {
+const StudentList = ({ students, deleteStudent, schools }) => {
   return (
     <div>
       {students.length > 0 ? (
         students.map((student) => (
           <div key={student.id}>
+            <Typography>
+              {student.name}
+            </Typography>
+            <Typography>
+              {schools.find(school => school.id === student.school).name}
+            </Typography>
             <button
-              onClick={async () => {
+              onClick={() => {
                 deleteStudent(student.id);
               }}
             >
@@ -23,9 +30,10 @@ const StudentList = ({ students, deleteStudent }) => {
     </div>
   );
 };
-const stateToProps = ({ students }) => {
+const stateToProps = ({ students, schools }) => {
   return {
     students,
+    schools
   };
 };
 
