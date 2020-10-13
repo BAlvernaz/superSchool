@@ -1,4 +1,5 @@
 import { Typography } from "@material-ui/core";
+import MenuIcon from '@material-ui/icons/Menu';
 import React from "react";
 import { connect } from "react-redux";
 import { removeStudent } from "../reducers/actions";
