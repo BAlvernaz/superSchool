@@ -37,6 +37,7 @@ class NewStudentForm extends React.Component {
           <label htmlFor="school">
             School:{" "}
             <select name="schoolId" value={schoolId} onChange={onChange}>
+            <option value={null}>Please Select The School You Attend!!!</option>
               {schools.length > 0 ? (
                 schools.map((school) => (
                   <option key={school.id} value={school.id}>
