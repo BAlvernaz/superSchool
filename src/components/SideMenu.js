@@ -13,16 +13,16 @@ import {
   import PersonIcon from "@material-ui/icons/Person";
   import SchoolIcon from "@material-ui/icons/School";
   import { Link as RouterLink} from 'react-router-dom'
-
-  const SideMenu = () => {
+  import { toggleSideMenu } from "../reducers/toggleActions";
+  const SideMenu = ({sideMenu, sideMenuToggle}) => {
       return (
           <div>
               <Drawer
-              open={this.props.sideMenu}
+              open={sideMenu}
               variant="temporary"
               anchor="left"
               onClose={() => {
-                this.props.sideMenuToggle();
+                sideMenuToggle();
               }}
             >
               <Paper>

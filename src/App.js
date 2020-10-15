@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import { getStudents, getSchools } from "./reducers/actions";
 import Navbar from "./components/Navbar";
 import SchoolList from "./components/SchoolList";
-import { toggleSideMenu } from "./reducers/toggleActions";
 import SideMenu from './components/SideMenu'
 
 class App extends React.Component {
@@ -43,7 +42,6 @@ const dispatchToProp = (dispatch) => {
   return {
     loadStudents: () => dispatch(getStudents()),
     loadSchools: () => dispatch(getSchools()),
-    sideMenuToggle: () => dispatch(toggleSideMenu()),
   };
 };
 
