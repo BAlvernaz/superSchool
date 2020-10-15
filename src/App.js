@@ -1,13 +1,16 @@
 import React from "react";
-import { HashRouter as Router, Route } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Route,
+} from "react-router-dom";
 import NewStudentForm from "./components/NewStudentForm";
 import StudentList from "./components/StudentList";
 import { connect } from "react-redux";
 import { getStudents, getSchools } from "./reducers/actions";
 import Navbar from "./components/Navbar";
 import SchoolList from "./components/SchoolList";
-import { Drawer, Paper } from "@material-ui/core";
 import { toggleSideMenu } from "./reducers/toggleActions";
+import SideMenu from './components/SideMenu'
 
 class App extends React.Component {
   componentDidMount() {
@@ -20,22 +23,12 @@ class App extends React.Component {
       <div>
         <Router>
           <div>
-            <Drawer
-              open={this.props.sideMenu}
-              variant="temporary"
-              anchor="left"
-              onClose={() => {this.props.sideMenuToggle()}}
-            >
-              <Paper>
-                
-              </Paper>
-            </Drawer>
-
+            <Route component={SideMenu} />
             <div>
               <Route component={Navbar} />
-              <Route component={StudentList} />
               <Route component={NewStudentForm} />
-              <Route component={SchoolList} />
+              <Route exact path="/students" component={StudentList} />
+              <Route exact path="/schools" component={SchoolList} />
             </div>
           </div>
         </Router>
@@ -44,11 +37,7 @@ class App extends React.Component {
   }
 }
 
-const stateToProps = ({ toggles }) => {
-  return {
-    sideMenu: toggles.sideMenu,
-  };
-};
+
 
 const dispatchToProp = (dispatch) => {
   return {
@@ -58,4 +47,4 @@ const dispatchToProp = (dispatch) => {
   };
 };
 
-export default connect(stateToProps, dispatchToProp)(App);
+export default connect(null, dispatchToProp)(App);
