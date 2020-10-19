@@ -1,8 +1,5 @@
 import {
   AppBar,
-  Box,
-  Button,
-  Container,
   Toolbar,
   Typography,
 } from "@material-ui/core";
@@ -11,7 +8,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { toggleSideMenu } from "../reducers/toggleActions";
 
-const Navbar = ({sideMenu, sideMenuToggle}) => {
+const Navbar = ({ sideMenuToggle }) => {
   return (
     <div>
       <AppBar position="static">

@@ -28,24 +28,32 @@ import {
               <Paper>
                 <List component="nav">
                   <ListItem>
+                  <Link component={RouterLink} to="/students">
+                    <div style={{display: "flex",
+                                  flexDirection: "row",
+                                  alignItems: "center"}}>
                     <ListItemIcon>
                       <PersonIcon />
                     </ListItemIcon>
                     <ListItemText>
-                      <Link component={RouterLink} to="/students">
                         <Typography variant="h6">Students</Typography>
-                      </Link>
                     </ListItemText>
+                    </div>
+                    </Link>
                   </ListItem>
                   <ListItem>
+                  <Link component={RouterLink} to="/schools">
+                    <div style={{display: "flex",
+                                  flexDirection: "row",
+                                  alignItems: "center"}}>
                     <ListItemIcon>
                       <SchoolIcon />
                     </ListItemIcon>
                     <ListItemText>
-                      <Link component={RouterLink} to="/schools">
                         <Typography variant="h6">Schools</Typography>
-                      </Link>
                     </ListItemText>
+                    </div>
+                    </Link>
                   </ListItem>
                 </List>
               </Paper>
