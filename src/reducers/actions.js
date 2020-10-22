@@ -21,6 +21,13 @@ const _getStudents = (students) => ({
     studentId,
   });
   
+  const _editStudent = (student) => ({
+    type: EDIT_STUDENT,
+    student
+  })
+  
+  // Student Only Action
+  
   export const getStudents = () => {
     return async (dispatch) => {
       try {
@@ -33,6 +40,8 @@ const _getStudents = (students) => ({
     };
   };
   
+  // Next Three Actions activate both School and Student Reducers due to the School being a Foreign key
+
   export const addStudent = (data) => {
     return async (dispatch) => {
       try {
@@ -61,7 +70,20 @@ const _getStudents = (students) => ({
     };
   };
 
-//School Actions
+  export const editStudent = (student) => {
+    return async dispatch => {
+      try {
+        const response = await axios.put(`http://localhost:8000/api/students/${student.id}/`, student)
+        dispatch(_editStudent(response.data))
+      } catch (err) {
+        // TODO: Change to a Error Reducer
+        console.error(err)
+      }
+    }
+  }
+
+//School Only Actions
+
 const GET_SCHOOLS = "GET_SCHOOLS";
 
 const _getSchools = schools => ({
