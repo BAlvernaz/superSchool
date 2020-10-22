@@ -1,10 +1,9 @@
-import { Card, Typography, CardContent, IconButton } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import StudentListCards from './StudentListCards'
 
 
-const StudentList = ({ students, deleteStudent, schools }) => {
+const StudentList = ({ students }) => {
   return (
     <div
       style={{
