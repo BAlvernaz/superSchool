@@ -23,6 +23,7 @@ export const schoolReducer = (state = [], action) => {
           students: [...school.students].filter(student => student.id !== action.studentId)
         }
       })
+      break;
     case EDIT_STUDENT:
       state = [...state].map(school => {
         if (school.id !== action.student.school) {
@@ -36,6 +37,7 @@ export const schoolReducer = (state = [], action) => {
           students: [...school.students, action.student]
         }
       })
+      break;
   }
   return state;
 };

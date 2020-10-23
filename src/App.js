@@ -3,13 +3,14 @@ import {
   HashRouter as Router,
   Route,
 } from "react-router-dom";
-import NewStudentForm from "./components/StudentForm";
 import StudentList from "./components/StudentList";
 import { connect } from "react-redux";
 import { getStudents, getSchools } from "./reducers/actions";
 import Navbar from "./components/Navbar";
 import SchoolList from "./components/SchoolList";
 import SideMenu from './components/SideMenu'
+import StudentForm from './components/StudentForm'
+import EditStudentDialog from "./components/EditStudentDialog";
 
 class App extends React.Component {
   componentDidMount() {
@@ -18,6 +19,7 @@ class App extends React.Component {
   }
 
   render() {
+    const { studentEditDialog } = this.props
     return (
       <div>
         <Router>
@@ -25,9 +27,10 @@ class App extends React.Component {
             <Route component={SideMenu} />
             <div>
               <Route component={Navbar} />
-              <Route component={NewStudentForm} />
+              <Route component={StudentForm} />
               <Route exact path="/students" component={StudentList} />
               <Route exact path="/schools" component={SchoolList} />
+              {studentEditDialog && <Route path="/students/edit/:id" component={EditStudentDialog} />}
             </div>
           </div>
         </Router>
@@ -36,7 +39,11 @@ class App extends React.Component {
   }
 }
 
-
+const stateToProps = ({ toggles }) => {
+  return {
+    studentEditDialog: toggles.editStudentDialog
+  }
+}
 
 const dispatchToProp = (dispatch) => {
   return {
@@ -45,4 +52,4 @@ const dispatchToProp = (dispatch) => {
   };
 };
 
-export default connect(null, dispatchToProp)(App);
+export default connect(stateToProps, dispatchToProp)(App);

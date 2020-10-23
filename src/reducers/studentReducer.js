@@ -18,6 +18,7 @@ export const studentReducer = (state = [], action) => {
         }
           return action.student
       })
+      break;
   }
   return state;
 };

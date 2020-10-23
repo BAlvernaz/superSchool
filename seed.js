@@ -18,6 +18,5 @@ const createStudents = async (count) => {
     }
 }
 
-createSchools(3)
 createStudents(6)
 
