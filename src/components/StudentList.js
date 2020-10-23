@@ -15,7 +15,7 @@ const StudentList = ({ students }) => {
     >
       {students.length > 0 ? (
         students.map((student) => (
-         <StudentListCards student={student} />
+         <StudentListCards student={student}  key={student.id} />
         ))
       ) : (
         <h1>No one is here yet</h1>

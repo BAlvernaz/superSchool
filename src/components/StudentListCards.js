@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Card, Typography, CardContent, IconButton } from "@material-ui/core";
-import { removeStudent } from "../reducers/actions";
+import { removeStudent, editStudent } from "../reducers/actions";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-const StudentListCard = ({ student, schools, deleteStudent }) => {
+const StudentListCard = ({ student, schools, deleteStudent, studentEdit }) => {
     return (
         <Card
         style={{
@@ -25,11 +25,11 @@ const StudentListCard = ({ student, schools, deleteStudent }) => {
               display: "flex",
             }}
           >
-            <IconButton>
-              <EditIcon />
+            <IconButton onClick={() => studentEdit(student)}>
+              <EditIcon color="primary"/>
             </IconButton>
-            <IconButton>
-              <DeleteIcon onClick={() => deleteStudent(student.id)} />
+            <IconButton onClick={() => deleteStudent(student.id)}>
+              <DeleteIcon  color="error" />
             </IconButton>
           </div>
         </CardContent>
@@ -45,7 +45,8 @@ const stateToProps = ({ schools }, { student }) => {
 
 const dispatchToProps = dispatch => {
     return {
-        deleteStudent: (studentId) => dispatch(removeStudent(studentId))
+        deleteStudent: (studentId) => dispatch(removeStudent(studentId)),
+        studentEdit: (student) => dispatch(editStudent(student)) 
     }
 }
 

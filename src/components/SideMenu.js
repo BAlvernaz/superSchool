@@ -14,6 +14,12 @@ import {
   import SchoolIcon from "@material-ui/icons/School";
   import { Link as RouterLink} from 'react-router-dom'
   import { toggleSideMenu } from "../reducers/toggleActions";
+
+
+  // Sidemenu contains links to various sections of website
+
+  // TODO: Make more modular
+  
   const SideMenu = ({sideMenu, sideMenuToggle}) => {
       return (
           <div>
