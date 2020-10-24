@@ -6,7 +6,7 @@ import {
   CardContent,
   IconButton,
 } from "@material-ui/core";
-import { removeStudent, editStudent } from "../reducers/actions";
+import { removeStudent } from "../reducers/actions";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { toggleEditStudentDialog } from "../reducers/toggleActions";

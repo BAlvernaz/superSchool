@@ -1,22 +1,27 @@
-import { Dialog, DialogTitle } from '@material-ui/core'
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core'
 import React from 'react'
 import { connect } from 'react-redux'
 import { toggleEditStudentDialog } from '../reducers/toggleActions'
+import StudentForm from './StudentForm'
 
-const EditStudentDialog = ({ editDialog, dialogToggle }) => {
+const EditStudentDialog = ({ editDialog, dialogToggle, student}) => {
     return (
         <div>
         <Dialog open={editDialog} onClose={() => {
             dialogToggle()}} >
-            <DialogTitle>Edit Student</DialogTitle>
+            <DialogTitle>Edit Student:{" " + student.name}</DialogTitle>
+            <DialogContent>
+                <StudentForm student={student} />
+            </DialogContent>
         </Dialog>
         </div>
     )
 }
 
-const stateToProps = ({ toggles }) => {
+const stateToProps = ({ toggles, students }, { match }) => {
     return {
-        editDialog: toggles.editStudentDialog
+        editDialog: toggles.editStudentDialog,
+        student: students.find(_student => _student.id === match.params.id)
     }
 
 }

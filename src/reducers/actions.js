@@ -5,12 +5,30 @@ const GET_STUDENTS = "GET_STUDENTS";
 const REMOVE_STUDENT = "REMOVE_STUDENT";
 const EDIT_STUDENT = "EDIT_STUDENT";
 const ADD_STUDENT = "ADD_STUDENT";
+const GET_SINGLE_STUDENT = "GET_SINGLE_STUDENT"
+
+
+// Student Only Action
+  
+export const getStudents = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/students");
+      dispatch(_getStudents(response.data));
+    } catch (err) {
+      // TODO: Change to a Error Reducer
+      console.error(err);
+    }
+  };
+};
 
 const _getStudents = (students) => ({
     type: GET_STUDENTS,
     students,
   });
-  
+
+  // Next Three Actions activate both School and Student Reducers due to the School being a Foreign key
+
   const _addStudent = (student) => ({
     type: ADD_STUDENT,
     student,
@@ -25,22 +43,6 @@ const _getStudents = (students) => ({
     type: EDIT_STUDENT,
     student
   })
-  
-  // Student Only Action
-  
-  export const getStudents = () => {
-    return async (dispatch) => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/students");
-        dispatch(_getStudents(response.data));
-      } catch (err) {
-        // TODO: Change to a Error Reducer
-        console.error(err);
-      }
-    };
-  };
-  
-  // Next Three Actions activate both School and Student Reducers due to the School being a Foreign key
 
   export const addStudent = (data) => {
     return async (dispatch) => {
@@ -70,10 +72,11 @@ const _getStudents = (students) => ({
     };
   };
 
-  export const editStudent = (student) => {
+  export const editStudent = (studentId, student) => {
+    console.log(student)
     return async dispatch => {
       try {
-        const response = await axios.put(`http://localhost:8000/api/students/${student.id}/`, student)
+        const response = await axios.put(`http://localhost:8000/api/students/${studentId}/`, student)
         dispatch(_editStudent(response.data))
       } catch (err) {
         // TODO: Change to a Error Reducer

@@ -17,19 +17,23 @@ export const schoolReducer = (state = [], action) => {
       });
       break;
     case REMOVE_STUDENT:
-      state = [...state].map(school => {
-        return {
-          ...school,
-          students: [...school.students].filter(student => student.id !== action.studentId)
+      state = state.map(school => {
+        if (school.students.find(student => student.id === action.studentId)) {
+          return {
+            ...school,
+            students: school.students.filter(student => student.id !== action.studentId)
+          }
         }
+        return school
       })
       break;
+
     case EDIT_STUDENT:
       state = [...state].map(school => {
         if (school.id !== action.student.school) {
           return {
             ...school,
-            students: [...school.students].filter(student => student.school !== school.id)
+            students: school.students.filter(student => student.school !== school.id)
           }
         }
         return {

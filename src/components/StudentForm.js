@@ -1,6 +1,7 @@
+import { TextField, Select, MenuItem, InputLabel, FormControl, Button } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { addStudent } from "../reducers/actions"
+import { addStudent, editStudent } from "../reducers/actions"
 
 
 class StudentForm extends React.Component {
@@ -12,6 +13,13 @@ class StudentForm extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmitEdit = this.onSubmitEdit.bind(this)
+  }
+
+  componentDidMount() {
+    if (this.props.student) {
+      this.setState({name: this.props.student.name, schoolId: this.props.student.school})
+    }
   }
 
   onChange(ev) {
@@ -23,47 +31,54 @@ class StudentForm extends React.Component {
     ev.preventDefault();
     this.props.newStudent({ name, school: schoolId });
   }
+
+  onSubmitEdit (ev) {
+    const { name, schoolId } = this.state
+    ev.preventDefault()
+    this.props.studentEdit(this.props.student.id, {name, school: schoolId})
+  }
   render() {
     const { name, schoolId} = this.state;
-    const { schools } = this.props;
-    const { onSubmit, onChange } = this;
+    const { schools, student } = this.props;
+    const { onSubmit, onChange, onSubmitEdit } = this;
     return (
       <div>
-        <form onSubmit={onSubmit}>
-          <label htmlFor="name">
-            Name: <input name="name" value={name} onChange={onChange} />
-          </label>
-          <label htmlFor="school">
-            School:{" "}
-            <select name="schoolId" value={schoolId} onChange={onChange}>
-            <option value={null}>Please Select The School You Attend!!!</option>
+        <form onSubmit={student ? onSubmitEdit : onSubmit}>
+          <TextField id="standard-required" label="Name" value={name} onChange={onChange} name="name"/>
+          <FormControl style={{
+            marginLeft: "10px",
+            minWidth: "240px"}}>
+          <InputLabel id="schoolSelectLabel">School That You Attend</InputLabel>
+            <Select id="demo-simple-select-autowidth" name="schoolId" value={schoolId} onChange={onChange} autoWidth labelId="schoolSelectLabel">
               {schools.length > 0 ? (
                 schools.map((school) => (
-                  <option key={school.id} value={school.id}>
+                  <MenuItem key={school.id} value={school.id}>
                     {school.name}
-                  </option>
+                  </MenuItem>
                 ))
               ) : (
-                <option value={null}>No Schools to Choose From</option>
+                <MenuItem value={null}>No Schools to Choose From</MenuItem>
               )}
-            </select>
-          </label>
-          <input type="submit" value="Save" />
+            </Select>
+            </FormControl>
+          <Button type="submit" color="primary" disableElevation variant="contained">Submit</Button>
         </form>
       </div>
     );
   }
 }
 
-const stateToProps = ({ schools }) => {
+const stateToProps = ({ schools }, { student }) => {
   return {
     schools,
+    student
   };
 };
 
 const dispatchToProps = (dispatch) => {
   return {
-    newStudent: (data) => dispatch(addStudent(data))
+    newStudent: (data) => dispatch(addStudent(data)),
+    studentEdit: (id, data) => dispatch(editStudent(id, data)) 
   };
 };
 
