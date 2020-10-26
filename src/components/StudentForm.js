@@ -49,7 +49,7 @@ class StudentForm extends React.Component {
             marginLeft: "10px",
             minWidth: "240px"}}>
           <InputLabel id="schoolSelectLabel">School That You Attend</InputLabel>
-            <Select id="demo-simple-select-autowidth" name="schoolId" value={schoolId} onChange={onChange} autoWidth labelId="schoolSelectLabel">
+            <Select name="schoolId" value={schoolId} onChange={onChange} autoWidth labelId="schoolSelectLabel">
               {schools.length > 0 ? (
                 schools.map((school) => (
                   <MenuItem key={school.id} value={school.id}>
