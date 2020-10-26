@@ -5,22 +5,11 @@ const GET_STUDENTS = "GET_STUDENTS";
 const REMOVE_STUDENT = "REMOVE_STUDENT";
 const EDIT_STUDENT = "EDIT_STUDENT";
 const ADD_STUDENT = "ADD_STUDENT";
-const GET_SINGLE_STUDENT = "GET_SINGLE_STUDENT"
 
 
-// Student Only Action
+// Student Actions
   
-export const getStudents = () => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/students");
-      dispatch(_getStudents(response.data));
-    } catch (err) {
-      // TODO: Change to a Error Reducer
-      console.error(err);
-    }
-  };
-};
+
 
 const _getStudents = (students) => ({
     type: GET_STUDENTS,
@@ -44,6 +33,17 @@ const _getStudents = (students) => ({
     student
   })
 
+  export const getStudents = () => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/students");
+        dispatch(_getStudents(response.data));
+      } catch (err) {
+        // TODO: Change to a Error Reducer
+        console.error(err);
+      }
+    };
+  };
   export const addStudent = (data) => {
     return async (dispatch) => {
       try {

@@ -23,10 +23,9 @@ const StudentList = ({ students }) => {
     </div>
   );
 };
-const stateToProps = ({ students, schools }) => {
+const stateToProps = ({ students }) => {
   return {
     students,
-    schools,
   };
 };
 
