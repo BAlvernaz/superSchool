@@ -7,16 +7,10 @@ const EDIT_STUDENT = "EDIT_STUDENT";
 const ADD_STUDENT = "ADD_STUDENT";
 
 
-// Student Actions
-  
-
-
 const _getStudents = (students) => ({
     type: GET_STUDENTS,
     students,
   });
-
-  // Next Three Actions activate both School and Student Reducers due to the School being a Foreign key
 
   const _addStudent = (student) => ({
     type: ADD_STUDENT,
@@ -85,7 +79,7 @@ const _getStudents = (students) => ({
     }
   }
 
-//School Only Actions
+//School Actions
 
 const GET_SCHOOLS = "GET_SCHOOLS";
 
