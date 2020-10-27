@@ -28,7 +28,7 @@ class App extends React.Component {
             <div>
               <Route component={Navbar} />
               <Route component={StudentForm} />
-              <Route exact path="/students" component={StudentList} />
+              <Route path="/students" component={StudentList} />
               <Route exact path="/schools" component={SchoolList} />
               {studentEditDialog && <Route path="/students/edit/:id" component={EditStudentDialog} />}
             </div>

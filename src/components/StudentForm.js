@@ -2,6 +2,7 @@ import { TextField, Select, MenuItem, InputLabel, FormControl, Button } from "@m
 import React from "react";
 import { connect } from "react-redux";
 import { addStudent, editStudent } from "../reducers/actions"
+import { toggleEditStudentDialog } from "../reducers/toggleActions";
 
 
 class StudentForm extends React.Component {
@@ -17,7 +18,8 @@ class StudentForm extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.student) {
+    const { student } = this.props
+    if (student) {
       this.setState({name: this.props.student.name, schoolId: this.props.student.school})
     }
   }
@@ -35,6 +37,7 @@ class StudentForm extends React.Component {
   onSubmitEdit (ev) {
     const { name, schoolId } = this.state
     ev.preventDefault()
+    this.props.toogleDialog()
     this.props.studentEdit(this.props.student.id, {name, school: schoolId})
   }
   render() {
@@ -78,7 +81,8 @@ const stateToProps = ({ schools }, { student }) => {
 const dispatchToProps = (dispatch) => {
   return {
     newStudent: (data) => dispatch(addStudent(data)),
-    studentEdit: (id, data) => dispatch(editStudent(id, data)) 
+    studentEdit: (id, data) => dispatch(editStudent(id, data)),
+    toogleDialog: () => dispatch(toggleEditStudentDialog())
   };
 };
 
