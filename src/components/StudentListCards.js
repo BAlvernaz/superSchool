@@ -5,12 +5,15 @@ import {
   Typography,
   CardContent,
   IconButton,
+  CardMedia,
+  CardActionArea
 } from "@material-ui/core";
 import { removeStudent } from "../reducers/actions";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { toggleEditStudentDialog } from "../reducers/toggleActions";
 import { Link as RouterLink } from "react-router-dom";
+import PersonIcon from "@material-ui/icons/Person";
 
 const StudentListCard = ({
   student,
@@ -24,31 +27,37 @@ const StudentListCard = ({
         minWidth: 247,
       }}
     >
-      <CardContent>
-        <Typography style={{ fontSize: 18 }}>
-          {"Name: " + student.name}
-        </Typography>
-        <Typography>
-          {"Attending: " +
-            schools.find((school) => school.id === student.school).name}
-        </Typography>
-        <div
-          style={{
-            display: "flex",
-          }}
+      <CardActionArea>
+        <CardMedia style={{ height: "140px" }} image={student.image} />
+        <CardContent>
+          <Typography style={{ fontSize: 18 }}>
+            {"Name: " + student.name}
+          </Typography>
+          <Typography>
+            {"Attending: " +
+              schools.find((school) => school.id === student.school).name}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <IconButton
+          component={RouterLink}
+          to={`/students/edit/${student.id}`}
+          onClick={() => editStudentToggle()}
         >
-          <IconButton
-            component={RouterLink}
-            to={`/students/edit/${student.id}`}
-            onClick={() => editStudentToggle()}
-          >
-            <EditIcon color="primary" />
-          </IconButton>
-          <IconButton onClick={() => deleteStudent(student.id)}>
-            <DeleteIcon color="error" />
-          </IconButton>
-        </div>
-      </CardContent>
+          <EditIcon color="primary" />
+        </IconButton>
+        <IconButton onClick={() => deleteStudent(student.id)}>
+          <DeleteIcon color="error" />
+        </IconButton>
+        <IconButton component={RouterLink} to={`/students/view/${student.id}`}>
+          <PersonIcon />
+        </IconButton>
+      </div>
     </Card>
   );
 };
