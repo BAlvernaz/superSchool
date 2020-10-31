@@ -20,6 +20,6 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include('students.urls')),
+    path('api/',include('api.urls')),
     url(r'^$', TemplateView.as_view(template_name='index.html')),
 ]

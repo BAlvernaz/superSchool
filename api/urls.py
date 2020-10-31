@@ -1,6 +1,6 @@
 
 from django.urls import path
-from students import views
+from api import views
 
 from rest_framework.urlpatterns import format_suffix_patterns
 

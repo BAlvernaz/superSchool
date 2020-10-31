@@ -1,5 +1,5 @@
-from students.models import Student, School
-from students.serializer import StudentSerializer, SchoolSerializer
+from api.models import Student, School
+from api.serializer import StudentSerializer, SchoolSerializer
 from rest_framework import generics
 
 # Create your views here.
