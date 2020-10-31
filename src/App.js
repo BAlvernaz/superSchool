@@ -1,37 +1,55 @@
-import React from 'react'
-import axios from 'axios'
-import {HashRouter as Router, Route} from 'react-router-dom'
-import NewStudentForm from './components/NewStudentForm'
-import StudentList from './components/StudentList'
-import { connect } from 'react-redux'
-import { getStudents } from './reducers/studentReducer'
-import { getSchools } from './reducers/schoolReducer'
-import SchoolList from './components/SchoolList'
+import React from "react";
+import {
+  HashRouter as Router,
+  Route,
+} from "react-router-dom";
+import StudentList from "./components/StudentList";
+import { connect } from "react-redux";
+import { getStudents, getSchools } from "./reducers/actions";
+import Navbar from "./components/Navbar";
+import SchoolList from "./components/SchoolList";
+import SideMenu from './components/SideMenu'
+import StudentForm from './components/StudentForm'
+import EditStudentDialog from "./components/EditStudentDialog";
 
 class App extends React.Component {
-    componentDidMount() {
-        this.props.loadStudents()
-        this.props.loadSchools()
-    }
+  componentDidMount() {
+    this.props.loadStudents();
+    this.props.loadSchools();
+  }
 
-    render() {
-        return (
+  render() {
+    const { studentEditDialog } = this.props
+    return (
+      <div>
+        <Router>
+          <div>
+            <Route component={SideMenu} />
             <div>
-                <Router>
-                    <Route component={StudentList} />
-                    <Route component={NewStudentForm} />
-                    <Route component={SchoolList} />
-                </Router>
+              <Route component={Navbar} />
+              <Route component={StudentForm} />
+              <Route path="/students" component={StudentList} />
+              <Route exact path="/schools" component={SchoolList} />
+              {studentEditDialog && <Route path="/students/edit/:id" component={EditStudentDialog} />}
             </div>
-        )
-    }
+          </div>
+        </Router>
+      </div>
+    );
+  }
 }
 
-const dispatchToProp = dispatch => {
-    return {
-        loadStudents: () => dispatch(getStudents()),
-        loadSchools: () => dispatch(getSchools())
-    }
+const stateToProps = ({ toggles }) => {
+  return {
+    studentEditDialog: toggles.editStudentDialog
+  }
 }
 
-export default connect(null, dispatchToProp)(App)
+const dispatchToProp = (dispatch) => {
+  return {
+    loadStudents: () => dispatch(getStudents()),
+    loadSchools: () => dispatch(getSchools()),
+  };
+};
+
+export default connect(stateToProps, dispatchToProp)(App);

@@ -1,67 +1,4 @@
-import axios from "axios";
-import { newStudent } from "./schoolReducer"
-//Student Reducer Actions
-
-const GET_STUDENTS = "GET_STUDENTS";
-const REMOVE_STUDENT = "REMOVE_STUDENT";
-const EDIT_STUDENT = "EDIT_STUDENT";
-const ADD_STUDENT = "ADD_STUDENT";
-
-const _getStudents = (students) => ({
-  type: GET_STUDENTS,
-  students,
-});
-
-const _addStudent = (student) => ({
-  type: ADD_STUDENT,
-  student,
-});
-
-const _removeStudent = (studentId) => ({
-  type: REMOVE_STUDENT,
-  studentId,
-});
-
-export const getStudents = () => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/students");
-      dispatch(_getStudents(response.data));
-    } catch (err) {
-      // TODO: Change to a Error Reducer
-      console.error(err);
-    }
-  };
-};
-
-export const addStudent = (data) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/students/",
-        data
-      );
-      dispatch(_addStudent(response.data));
-      newStudent(response.data)
-
-    } catch (err) {
-      // TODO: Change to a Error Reducer
-      console.error(err);
-    }
-  };
-};
-
-export const removeStudent = (studentId) => {
-  return async (dispatch) => {
-    try {
-      await axios.delete(`http://localhost:8000/api/students/${studentId}`);
-      dispatch(_removeStudent(studentId));
-    } catch (err) {
-      // TODO: Change to a Error Reducer
-      console.error(err);
-    }
-  };
-};
+import { GET_STUDENTS, ADD_STUDENT, REMOVE_STUDENT, EDIT_STUDENT } from './actions'
 
 export const studentReducer = (state = [], action) => {
   switch (action.type) {
@@ -73,6 +10,14 @@ export const studentReducer = (state = [], action) => {
       break;
     case REMOVE_STUDENT:
       state = state.filter((student) => student.id !== action.studentId);
+      break;
+    case EDIT_STUDENT:
+      state = [...state].map(student => {
+        if (student.id !== action.student.id) {
+          return student
+        }
+          return action.student
+      })
       break;
   }
   return state;
