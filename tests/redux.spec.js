@@ -5,11 +5,11 @@ import {
   GET_STUDENTS,
   REMOVE_STUDENT,
   GET_SCHOOLS
-} from "../reducers/actions";
-import { studentReducer } from "../reducers/studentReducer";
-import { schoolReducer } from "../reducers/schoolReducer";
-import { togglerReducer } from "../reducers/togglerReducer"
-import { EDIT_STUDENT_TOGGLE, SIDEMENU_TOGGLE } from "../reducers/toggleActions";
+} from "../src/reducers/actions";
+import { studentReducer } from "../src/reducers/studentReducer";
+import { schoolReducer } from "../src/reducers/schoolReducer";
+import { togglerReducer } from "../src/reducers/togglerReducer"
+import { EDIT_STUDENT_TOGGLE, SIDEMENU_TOGGLE } from "../src/reducers/toggleActions";
 
 describe("Students Reducer", () => {
   const student1UUID = uuidv4();
