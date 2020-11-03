@@ -11,33 +11,49 @@ const mockStore = configureStore(middlewares);
 import { createMount, createShallow } from "@material-ui/core/test-utils";
 import Navbar from "../src/components/Navbar";
 import App from "../src/App";
-import { MemoryRouter, Route } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import StudentList from "../src/components/StudentList";
 
 describe("Component Testing", () => {
   let wrapper;
+  let initState;
+  let store;
+  const mount = createMount();
+  const shallow = createShallow()
+
   describe("App Component", () => {
-    test("Displays Navbar at Any Route", () => {
-      const initState = {
+    beforeEach(() => {
+      initState = {
         toggles: {
           editStudentDialog: false,
         },
-        schools : []
+        schools: [],
       };
-      const store = mockStore(initState);
-      const shallow = createShallow({ untilSelector: "App" });
-      const mount = createMount();
-      const wrapper = mount(
+      store = mockStore(initState);
+    });
+    test("Display's Navbar at base URL", () => {
+      wrapper = mount(
         <MemoryRouter initialEntries={["/"]}>
-            <Provider store={store}>
-          <App  />
+          <Provider store={store}>
+            <App />
           </Provider>
         </MemoryRouter>
       );
-      expect(
-        wrapper.find(Navbar).length
-      ).toEqual(1);
+      expect(wrapper.find(Navbar).length).toEqual(1);
     });
-  });
+    test("Display's Navbar at any URL", () => {
+        wrapper = mount(
+            <MemoryRouter initialEntries={["/random"]}>
+                <Provider store={store}>
+                    <App />
+                </Provider>
+            </MemoryRouter>
+        )
+        expect(wrapper.find(Navbar).length).toEqual(1)
+    });
+    test("Display's Student List When URL Contains /students", () => {
+      
+    })
+});
 });
