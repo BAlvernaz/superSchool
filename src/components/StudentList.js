@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import StudentListCards from './StudentListCards'
+import StudentListCards from './StudentListCard'
 
 
 const StudentList = ({ students }) => {
