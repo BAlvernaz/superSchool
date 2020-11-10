@@ -47,7 +47,7 @@ const StudentListCard = ({
         <IconButton
           component={RouterLink}
           to={`/students/edit/${student.id}`}
-          onClick={() => editStudentToggle()}
+          onClick={() => editStudentToggle() }
         >
           <EditIcon color="primary" />
         </IconButton>
@@ -65,7 +65,6 @@ const stateToProps = ({ schools, toggles }, { student }) => {
   return {
     schools,
     student,
-    eStudentTog: toggles.editStudentDialog,
   };
 };
 
