@@ -2,8 +2,10 @@ from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 from .models import School, Student, User
 from .views import SchoolList, SchoolDetail, StudentList, StudentDetail
+from django.contrib.auth import get_user_model
 import json
 # Create your tests here.
+
 class StudentsSchoolsApiTest(TestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
@@ -24,12 +26,8 @@ class StudentsSchoolsApiTest(TestCase):
 class UserandAuthenicationTest(TestCase):
     def setUp(self):
         self.school1 = School.objects.create(name="Test School 1")
-        
-        
     def test_create_user(self):
-      request = {"school": self.school1, "gpa": 4.0 , "image": "No Image"}
-      testStudentUser = User.objects.create( "Test", password="password", first_name="Test", last_name="Testy", is_student=True, data=request)
+      student_profile = Student.objects.create(school=self.school1, gpa=4.0 , image="No Image")
+      testStudentUser = get_user_model().objects.create( email="Test@test.com", password="password", first_name="Test", last_name="Testy", is_student=True, student_profile=student_profile)
       self.assertEqual(testStudentUser.get_full_name(), "Test Testy")
-      self.assertIsNone(testStudentUser.student_profile)
       self.assertTrue(testStudentUser.is_student)
-      
