@@ -13,9 +13,7 @@ import { createShallow } from "@material-ui/core/test-utils";
 import Navbar from "../src/components/Navbar";
 import App from "../src/App";
 import {
-  MemoryRouter,
   Route,
-  HashRouter as Router,
   HashRouter,
 } from "react-router-dom";
 import StudentList from "../src/components/StudentList";
@@ -146,3 +144,13 @@ describe("Student Card Component", () => {
     expect(wrapper.find('PersonIcon')).toHaveLength(1)
   })
 });
+
+describe("Navbar Component", () => {
+  const shallow = createShallow({untilSelector: 'Navbar'})
+  const wrapper = shallow(<Navbar store={store} />)
+  test("Contains An AppBar, TypoGraphy, Button", () => {
+    expect(wrapper.find('WithStyles(ForwardRef(AppBar))')).toHaveLength(1)
+    expect(wrapper.find('WithStyles(ForwardRef(Button))')).toHaveLength(1)
+    expect(wrapper.find("WithStyles(ForwardRef(Typography))")).toHaveLength(1)
+  })
+})

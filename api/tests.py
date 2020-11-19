@@ -11,7 +11,7 @@ class UserandAuthenicationTest(TestCase):
     def setUp(self):
         self.school1 = School.objects.create(name="Test School 1")
     def test_create_user(self):
-      testStudentUser = get_user_model().objects.create_user( email="Test@test.com", password="password", first_name="Test", last_name="Testy", is_student=True, image="No Image", school=self.school1)
+      testStudentUser = User.objects.create_user( email="Test@test.com", password="password", first_name="Test", last_name="Testy", is_student=True, image="No Image", school=self.school1)
       self.assertEqual(testStudentUser.get_full_name(), "Test Testy")
       self.assertTrue(testStudentUser.is_student)
       self.assertEqual(len(Student.objects.all()), 1)

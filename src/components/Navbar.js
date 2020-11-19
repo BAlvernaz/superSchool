@@ -1,8 +1,4 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
 import { connect } from "react-redux";
@@ -16,13 +12,18 @@ const Navbar = ({ sideMenuToggle }) => {
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
-          <MenuIcon onClick={() => {
-            sideMenuToggle()
-          }}/>
+          <MenuIcon
+            onClick={() => {
+              sideMenuToggle();
+            }}
+          />
           <Typography variant="h6">Super School</Typography>
+          <div>
+            <Button variant="contained">Register</Button>
+          </div>
         </Toolbar>
       </AppBar>
     </div>
@@ -31,14 +32,14 @@ const Navbar = ({ sideMenuToggle }) => {
 
 const stateToProps = ({ toggles }) => {
   return {
-    sideMenu: toggles.sideMenu
-  }
-}
+    sideMenu: toggles.sideMenu,
+  };
+};
 
-const dispatchToProps = dispatch => {
+const dispatchToProps = (dispatch) => {
   return {
-    sideMenuToggle: () => dispatch(toggleSideMenu())
-  }
-}
+    sideMenuToggle: () => dispatch(toggleSideMenu()),
+  };
+};
 
 export default connect(stateToProps, dispatchToProps)(Navbar);
