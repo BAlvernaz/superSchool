@@ -6,11 +6,11 @@ export {
     EDIT_STUDENT_TOGGLE
 }
 
-const _toggleSideMenu = () => ({
+export const _toggleSideMenu = () => ({
     type: SIDEMENU_TOGGLE
 })
 
-const _toggleEditStudentDialog = () => ({
+export const _toggleEditStudentDialog = () => ({
     type: EDIT_STUDENT_TOGGLE
 })
 
