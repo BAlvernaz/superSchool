@@ -19,6 +19,9 @@ import {
   // Sidemenu contains links to various sections of website
 
   // TODO: Make more modular
+
+  const linkTitles = ["Students", "Schools"]
+
   
   const SideMenu = ({sideMenu, sideMenuToggle}) => {
       return (
@@ -33,34 +36,22 @@ import {
             >
               <Paper>
                 <List component="nav">
-                  <ListItem>
-                  <Link component={RouterLink} to="/students">
-                    <div style={{display: "flex",
-                                  flexDirection: "row",
-                                  alignItems: "center"}}>
-                    <ListItemIcon>
-                      <PersonIcon />
-                    </ListItemIcon>
-                    <ListItemText>
-                        <Typography variant="h6">Students</Typography>
-                    </ListItemText>
-                    </div>
-                    </Link>
-                  </ListItem>
-                  <ListItem>
-                  <Link component={RouterLink} to="/schools">
-                    <div style={{display: "flex",
-                                  flexDirection: "row",
-                                  alignItems: "center"}}>
-                    <ListItemIcon>
-                      <SchoolIcon />
-                    </ListItemIcon>
-                    <ListItemText>
-                        <Typography variant="h6">Schools</Typography>
-                    </ListItemText>
-                    </div>
-                    </Link>
-                  </ListItem>
+                  {linkTitles.map((link,idx) => (
+                    <ListItem key={idx}>
+                    <Link component={RouterLink} to={`/${link.toLowerCase()}`}>
+                      <div style={{display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center"}}>
+                      <ListItemIcon>
+                        {link === "Students" ? <PersonIcon /> : <SchoolIcon />}
+                      </ListItemIcon>
+                      <ListItemText>
+                          <Typography variant="h6">{link}</Typography>
+                      </ListItemText>
+                      </div>
+                      </Link>
+                    </ListItem>
+                  ))}
                 </List>
               </Paper>
             </Drawer>

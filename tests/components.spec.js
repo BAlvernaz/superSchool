@@ -12,20 +12,18 @@ const mockStore = configureStore(middlewares);
 import { createShallow } from "@material-ui/core/test-utils";
 import Navbar from "../src/components/Navbar";
 import App from "../src/App";
-import {
-  Route,
-  HashRouter,
-} from "react-router-dom";
+import { Route, HashRouter } from "react-router-dom";
 import StudentList from "../src/components/StudentList";
 import Routes from "../src/components/Routes";
 import SchoolList from "../src/components/SchoolList";
 import EditStudentDialog from "../src/components/EditStudentDialog";
 import { EDIT_STUDENT_TOGGLE } from "../src/reducers/toggleActions";
 import StudentListCard from "../src/components/StudentListCard";
-import { IconButton } from "@material-ui/core"
+import { IconButton } from "@material-ui/core";
+import SideMenu from "../src/components/SideMenu"
+import { toggleEditStudentDialog } from '../src/reducers/toggleActions'
 
-let state
- = {
+let state = {
   toggles: {
     editStudentDialog: false,
   },
@@ -52,6 +50,7 @@ describe("App and Route Component", () => {
   test("Routes Map To Correct Components", () => {
     state = {
       toggles: {
+        sideMenu: false,
         editStudentDialog: true,
       },
       schools: [],
@@ -138,19 +137,34 @@ describe("Student Card Component", () => {
     />
   );
   test("Should Contain Three Buttons/Icons - Edit, Delete, Profile", () => {
-    expect(wrapper.find(IconButton)).toHaveLength(3)
-    expect(wrapper.find('EditIcon')).toHaveLength(1)
-    expect(wrapper.find('DeleteIcon')).toHaveLength(1)
-    expect(wrapper.find('PersonIcon')).toHaveLength(1)
-  })
+    expect(wrapper.find(IconButton)).toHaveLength(3);
+    expect(wrapper.find("EditIcon")).toHaveLength(1);
+    expect(wrapper.find("DeleteIcon")).toHaveLength(1);
+    expect(wrapper.find("PersonIcon")).toHaveLength(1);
+  });
 });
 
 describe("Navbar Component", () => {
-  const shallow = createShallow({untilSelector: 'Navbar'})
-  const wrapper = shallow(<Navbar store={store} />)
+  let shallow = createShallow({ untilSelector: "Navbar" });
+  const wrapper = shallow(<Navbar store={store}  />);
   test("Contains An AppBar, TypoGraphy, Button", () => {
-    expect(wrapper.find('WithStyles(ForwardRef(AppBar))')).toHaveLength(1)
-    expect(wrapper.find('WithStyles(ForwardRef(Button))')).toHaveLength(1)
-    expect(wrapper.find("WithStyles(ForwardRef(Typography))")).toHaveLength(1)
-  })
-})
+    expect(wrapper.find("WithStyles(ForwardRef(AppBar))")).toHaveLength(1);
+    expect(wrapper.find("WithStyles(ForwardRef(Button))")).toHaveLength(1);
+    expect(wrapper.find("WithStyles(ForwardRef(Typography))")).toHaveLength(1);
+  });
+  describe("onClick Methods", () => {
+    store.dispatch = jest.fn()
+    const action = toggleEditStudentDialog({type: EDIT_STUDENT_TOGGLE})
+    test("Side Menu Toggle", () => {
+      // Findi
+      expect(wrapper.find('MenuIcon')).toHaveLength(1)
+      shallow = createShallow({untilSelector: "SideMenu"})
+       const sideMenuWrapper = shallow(<SideMenu store={store} />)
+       const sideMenuToggle = wrapper.find('MenuIcon')
+      //Initial State
+     expect(sideMenuWrapper.find("WithStyles(ForwardRef(Drawer))").props().open).toBe(false)
+     console.log(sideMenuToggle.debug())
+     sideMenuToggle.dive().simulate('click')
+    })
+  });
+});
