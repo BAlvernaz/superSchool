@@ -1,6 +1,6 @@
 import uuid
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 
 from .managers import CustomUserManager
@@ -13,21 +13,22 @@ class School(models.Model):
     name = models.CharField(max_length=100)
     image = models.CharField(max_length=255)
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
     )
 
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    school = models.ForeignKey(School, related_name="personnel", on_delete=models.CASCADE, blank=True)
-    image = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name = models.CharField(max_length=255, blank=True, null=True)
+    school = models.ForeignKey(School, related_name="personnel", on_delete=models.CASCADE, blank=True, null=True)
+    image = models.CharField(max_length=255, blank=True, null=True)
 
-    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     
     USERNAME_FIELD = 'email'
 

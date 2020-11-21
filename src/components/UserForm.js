@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { connect } from "react-redux";
 import { addStudent, editStudent } from "../reducers/actions";
+import { toggleDialog } from "../reducers/toggleActions"
 
 const inputs = ["first_name", "last_name", "email", "image", "password"];
 
@@ -21,7 +22,7 @@ class UserForm extends React.Component {
       email: "",
       image: "",
       password: "",
-      schoolId: "",
+      school: "",
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -33,7 +34,7 @@ class UserForm extends React.Component {
     if (student) {
       this.setState({
         name: this.props.student.name,
-        schoolId: this.props.student.school,
+        school: this.props.student.school,
       });
     }
   }
@@ -43,19 +44,18 @@ class UserForm extends React.Component {
   }
 
   onSubmit(ev) {
-    const { schoolId } = this.state;
     ev.preventDefault();
-    this.props.newStudent({ name, school: schoolId });
+    this.props.dialogToggle();
+    this.props.newStudent(this.state);
   }
 
   onSubmitEdit(ev) {
-    const { name, schoolId } = this.state;
     ev.preventDefault();
-    this.props.toogleDialog();
-    this.props.studentEdit(this.props.student.id, { name, school: schoolId });
+    this.props.dialogToggle();
+    this.props.studentEdit(this.props.student.id, this.state );
   }
   render() {
-    const { schoolId } = this.state;
+    const { school } = this.state;
     const { schools, student } = this.props;
     const { onSubmit, onChange, onSubmitEdit } = this;
     return (
@@ -64,7 +64,6 @@ class UserForm extends React.Component {
           {inputs.map((input, idx) => (
             <TextField
               key={idx}
-              id="standard-required"
               label={input.replace("_", " ")}
               value={this.state[input]}
               onChange={onChange}
@@ -88,8 +87,8 @@ class UserForm extends React.Component {
               School That You Attend
             </InputLabel>
             <Select
-              name="schoolId"
-              value={schoolId}
+              name="school"
+              value={school}
               onChange={onChange}
               autoWidth
               labelId="schoolSelectLabel"
@@ -130,6 +129,7 @@ const dispatchToProps = (dispatch) => {
   return {
     newStudent: (data) => dispatch(addStudent(data)),
     studentEdit: (id, data) => dispatch(editStudent(id, data)),
+    dialogToggle: () => dispatch(toggleDialog())
   };
 };
 

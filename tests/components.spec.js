@@ -22,7 +22,6 @@ import SideMenu from "../src/components/SideMenu";
 import UserForm from "../src/components/UserForm";
 import UserDialog from "../src/components/UserDialog";
 
-
 let state = {
   toggles: {
     editStudentDialog: false,
@@ -62,7 +61,7 @@ describe("App and Route Component", () => {
     expect(pathMap["/students"]).toBe(StudentList);
     expect(pathMap["/schools"]).toBe(SchoolList);
     expect(pathMap["/students/edit/:id"]).toBe(UserDialog);
-    expect(pathMap["/register"]).toBe(UserDialog)
+    expect(pathMap["/register"]).toBe(UserDialog);
   });
 });
 
@@ -76,7 +75,7 @@ describe("Student List Component", () => {
       {
         id: "109e16b2-b266-4443-b01c-6ac5b12738b7",
         name: "Test School 1",
-        image: "No Image"
+        image: "No Image",
       },
     ],
     students: [],
@@ -138,7 +137,7 @@ describe("Navbar Component", () => {
   describe("onClick Methods", () => {
     test("Side Menu Toggle", () => {
       expect(wrapper.find("MenuIcon")).toHaveLength(1);
-    shallow = createShallow({ untilSelector: "SideMenu" });
+      shallow = createShallow({ untilSelector: "SideMenu" });
       const sideMenuWrapper = shallow(<SideMenu store={store} />);
       const sideMenuToggle = wrapper.find("MenuIcon").shallow();
       // Initial State
@@ -146,7 +145,7 @@ describe("Navbar Component", () => {
         sideMenuWrapper.find("WithStyles(ForwardRef(Drawer))").props().open
       ).toBe(false);
       //  Simulating a Button Click - Check That the Store recieved a dispatch.
-      sideMenuToggle.prop('onClick')();
+      sideMenuToggle.prop("onClick")();
       expect(store.dispatch).toHaveBeenCalled();
     });
   });
@@ -154,20 +153,14 @@ describe("Navbar Component", () => {
 
 describe("UserForm Component", () => {
   beforeEach(() => {
-    store.dispatch.mockClear()
-  })
-  const shallow = createShallow({untilSelector: "UserForm"})
-  const wrapper = shallow(<UserForm store={store} />)
+    store.dispatch.mockClear();
+  });
+  const shallow = createShallow({ untilSelector: "UserForm" });
+  const wrapper = shallow(<UserForm store={store} />);
   test("Should Have Five TextFields, One Select, One Button, Six State Properties", () => {
-    expect(wrapper.find(TextField)).toHaveLength(5)
-    expect(wrapper.find(Select)).toHaveLength(1)
-    expect(wrapper.find(Button)).toHaveLength(1)
-    expect(Object.keys(wrapper.state())).toHaveLength(6)
-  })
-  test("Submits Form Contents", () => {
-    const fakeEvent = { preventDefault: () => console.log('preventDefault') };
-    const formWrapper = wrapper.find('form')
-    formWrapper.simulate('submit', fakeEvent)
-    expect(store.dispatch).toHaveBeenCalled()
-  })  
-})
+    expect(wrapper.find(TextField)).toHaveLength(5);
+    expect(wrapper.find(Select)).toHaveLength(1);
+    expect(wrapper.find(Button)).toHaveLength(1);
+    expect(Object.keys(wrapper.state())).toHaveLength(6);
+  });
+});

@@ -1,7 +1,8 @@
-const { SIDEMENU_TOGGLE } = require("./toggleActions");
+const { SIDEMENU_TOGGLE, USER_FORM_DIALOG_TOGGLE } = require("./toggleActions");
 
 const initialState = {
   sideMenu: false,
+  userFormDialog: false
 };
 
 export const togglerReducer = (state = initialState, action) => {
@@ -12,6 +13,11 @@ export const togglerReducer = (state = initialState, action) => {
               sideMenu: !state.sideMenu
             }
             break;
+        case USER_FORM_DIALOG_TOGGLE:
+            state = {
+              ...state,
+              userFormDialog: !state.userFormDialog
+            }
     }
     return state
 }

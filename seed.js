@@ -29,6 +29,6 @@ const createStudents = async (count) => {
 }
 
 
-createStudents(10)
+createSchools(3)
 
 

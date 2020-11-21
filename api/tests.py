@@ -15,6 +15,11 @@ class UserandAuthenicationTest(TestCase):
       self.assertEqual(testStudentUser.get_full_name(), "Test Testy")
       self.assertTrue(testStudentUser.is_student)
       self.assertEqual(len(Student.objects.all()), 1)
+    def test_create_superuser(self):
+      testSuperUser = User.objects.create_superuser("super@super.com","password", first_name="Super", last_name="User", image="No Image", school=None)
+      self.assertEqual(testSuperUser.get_full_name(), "Super User")
+      self.assertTrue(testSuperUser.is_staff)
+      self.assertTrue(testSuperUser.is_superuser)
 
 
 class StudentsSchoolsApiTest(TestCase):
@@ -39,7 +44,8 @@ class StudentsSchoolsApiTest(TestCase):
           "first_name": "Blake",
           "last_name": "Alvernaz", 
           "school": self.school1.id, 
-          "image": "No Image"}, 
+          "image": "No Image",
+          "is_student": True}, 
           format="json")
         response = UserCreation.as_view()(request)
         self.assertEqual(response.status_code, 201)
