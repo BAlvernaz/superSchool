@@ -9,7 +9,6 @@ import {
 import React from "react";
 import { connect } from "react-redux";
 import { addStudent, editStudent } from "../reducers/actions";
-import { toggleEditStudentDialog } from "../reducers/toggleActions";
 
 const inputs = ["first_name", "last_name", "email", "image", "password"];
 
@@ -22,6 +21,7 @@ class UserForm extends React.Component {
       email: "",
       image: "",
       password: "",
+      schoolId: "",
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -69,7 +69,13 @@ class UserForm extends React.Component {
               value={this.state[input]}
               onChange={onChange}
               name={input}
-              type={input === "password"}
+              type={
+                input === "password"
+                  ? "password"
+                  : input === "email"
+                  ? "email"
+                  : "text"
+              }
             />
           ))}
           <FormControl

@@ -9,16 +9,15 @@ import configureStore from "redux-mock-store";
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-import { createShallow } from "@material-ui/core/test-utils";
+import { createMount, createShallow } from "@material-ui/core/test-utils";
 import Navbar from "../src/components/Navbar";
 import App from "../src/App";
 import { Route, HashRouter } from "react-router-dom";
 import StudentList from "../src/components/StudentList";
 import Routes from "../src/components/Routes";
 import SchoolList from "../src/components/SchoolList";
-import EditStudentDialog from "../src/components/UserDialog";
 import StudentListCard from "../src/components/StudentListCard";
-import { IconButton } from "@material-ui/core";
+import { Button, IconButton, Select, TextField } from "@material-ui/core";
 import SideMenu from "../src/components/SideMenu";
 import UserForm from "../src/components/UserForm";
 import UserDialog from "../src/components/UserDialog";
@@ -154,8 +153,21 @@ describe("Navbar Component", () => {
 });
 
 describe("UserForm Component", () => {
+  beforeEach(() => {
+    store.dispatch.mockClear()
+  })
   const shallow = createShallow({untilSelector: "UserForm"})
   const wrapper = shallow(<UserForm store={store} />)
-  console.log(wrapper.debug())
-  expect(wrapper.find("WithStyles")).toHaveLength(5)
+  test("Should Have Five TextFields, One Select, One Button, Six State Properties", () => {
+    expect(wrapper.find(TextField)).toHaveLength(5)
+    expect(wrapper.find(Select)).toHaveLength(1)
+    expect(wrapper.find(Button)).toHaveLength(1)
+    expect(Object.keys(wrapper.state())).toHaveLength(6)
+  })
+  test("Submits Form Contents", () => {
+    const fakeEvent = { preventDefault: () => console.log('preventDefault') };
+    const formWrapper = wrapper.find('form')
+    formWrapper.simulate('submit', fakeEvent)
+    expect(store.dispatch).toHaveBeenCalled()
+  })  
 })
