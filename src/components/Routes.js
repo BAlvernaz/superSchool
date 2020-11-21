@@ -3,10 +3,10 @@ import { Route } from "react-router-dom";
 import Navbar from "./Navbar";
 import SchoolList from "./SchoolList";
 import SideMenu from "./SideMenu";
-import EditStudentDialog from "./EditStudentDialog";
+import UserDialog from "./UserDialog";
 import StudentList from "./StudentList";
 
-const Routes = ({ studentEditDialog }) => {
+const Routes = ({ studentEditDialog, register }) => {
   return (
     <div>
       <Route component={SideMenu} />
@@ -14,9 +14,8 @@ const Routes = ({ studentEditDialog }) => {
         <Route component={Navbar} />
         <Route path="/students" component={StudentList} />
         <Route exact path="/schools" component={SchoolList} />
-        {studentEditDialog && (
-          <Route path="/students/edit/:id" component={EditStudentDialog} />
-        )}
+        <Route path="/students/edit/:id" component={UserDialog} />
+        <Route path="/register" component={UserDialog}/> 
       </div>
     </div>
   );

@@ -2,9 +2,10 @@ import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
 import { connect } from "react-redux";
-import { toggleSideMenu } from "../reducers/toggleActions";
+import { toggleRegister, toggleSideMenu } from "../reducers/toggleActions";
+import { Link as RouterLink } from "react-router-dom";
 
-const Navbar = ({ sideMenuToggle }) => {
+const Navbar = ({ sideMenuToggle, registerToggle }) => {
   return (
     <div>
       <AppBar position="static">
@@ -22,7 +23,7 @@ const Navbar = ({ sideMenuToggle }) => {
           />
           <Typography variant="h6">Super School</Typography>
           <div>
-            <Button variant="contained">Register</Button>
+            <Button variant="contained" component={RouterLink} to={"/register"}>Register</Button>
           </div>
         </Toolbar>
       </AppBar>

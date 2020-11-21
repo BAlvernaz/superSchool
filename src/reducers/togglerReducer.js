@@ -1,8 +1,7 @@
-const { SIDEMENU_TOGGLE, EDIT_STUDENT_TOGGLE } = require("./toggleActions");
+const { SIDEMENU_TOGGLE } = require("./toggleActions");
 
 const initialState = {
   sideMenu: false,
-  editStudentDialog: false
 };
 
 export const togglerReducer = (state = initialState, action) => {
@@ -13,11 +12,6 @@ export const togglerReducer = (state = initialState, action) => {
               sideMenu: !state.sideMenu
             }
             break;
-        case EDIT_STUDENT_TOGGLE:
-          state = {
-            ...state,
-            editStudentDialog: !state.editStudentDialog
-          }
     }
     return state
 }

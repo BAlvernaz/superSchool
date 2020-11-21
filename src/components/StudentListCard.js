@@ -11,7 +11,6 @@ import {
 import { removeStudent } from "../reducers/actions";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { toggleEditStudentDialog } from "../reducers/toggleActions";
 import { Link as RouterLink } from "react-router-dom";
 import PersonIcon from "@material-ui/icons/Person";
 
@@ -19,7 +18,6 @@ const StudentListCard = ({
   student,
   schools,
   deleteStudent,
-  editStudentToggle,
 }) => {
   return (
     <Card
@@ -47,7 +45,6 @@ const StudentListCard = ({
         <IconButton
           component={RouterLink}
           to={`/students/edit/${student.id}`}
-          onClick={() => editStudentToggle() }
         >
           <EditIcon color="primary" />
         </IconButton>
@@ -61,7 +58,7 @@ const StudentListCard = ({
     </Card>
   );
 };
-const stateToProps = ({ schools, toggles }, { student }) => {
+const stateToProps = ({ schools }, { student }) => {
   return {
     schools,
     student,
@@ -71,7 +68,6 @@ const stateToProps = ({ schools, toggles }, { student }) => {
 const dispatchToProps = (dispatch) => {
   return {
     deleteStudent: (studentId) => dispatch(removeStudent(studentId)),
-    editStudentToggle: () => dispatch(toggleEditStudentDialog()),
   };
 };
 
