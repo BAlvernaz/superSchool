@@ -20,7 +20,7 @@ const UserDialog = ({ student, dialogToggle, toggle }) => {
 
 const stateToProps = ({ students, toggles }, { match }) => {
     return {
-        student: students.find(_student => _student.id === match.params.id),
+        student: match.params.id ? students.find(_student => _student.id === match.params.id) : null,
         toggle: toggles.userFormDialog
     }
 }
