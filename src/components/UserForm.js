@@ -51,6 +51,7 @@ class UserForm extends React.Component {
     ev.preventDefault();
     this.props.dialogToggle();
     this.props.newStudent(this.state);
+    this.props.history.push('/students')
   }
 
   onSubmitEdit(ev) {
