@@ -18,6 +18,7 @@ const StudentListCard = ({
   student,
   schools,
   deleteStudent,
+
 }) => {
   return (
     <Card
@@ -29,11 +30,11 @@ const StudentListCard = ({
         <CardMedia style={{ height: "140px" }} image={student.image} />
         <CardContent>
           <Typography style={{ fontSize: 18 }}>
-            {"Name: " + student.name}
+            {"Name: " + student.first_name}
           </Typography>
           <Typography>
             {"Attending: " +
-              schools.find((school) => school.id === student.school).name}
+              schools.find((school) => school.id === student.school)}
           </Typography>
         </CardContent>
       </CardActionArea>

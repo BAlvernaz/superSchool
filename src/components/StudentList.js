@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import StudentListCards from './StudentListCard'
+import StudentListCard from './StudentListCard'
 
 
 const StudentList = ({ students }) => {
+  console.log(students)
   return (
     <div
       style={{
@@ -15,7 +16,7 @@ const StudentList = ({ students }) => {
     >
       {students.length > 0 ? (
         students.map((student) => (
-         <StudentListCards student={student}  key={student.id} />
+         <StudentListCard student={student}  key={student.id} />
         ))
       ) : (
         <h1>No one is here yet</h1>

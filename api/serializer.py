@@ -24,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
       model = Student
-      fields = ["__all__"]
+      fields = ["gpa", "profile", "id"]
 
 class SchoolSerializer(serializers.ModelSerializer):
     personnel = UserSerializer(many=True, required=False)
