@@ -33,8 +33,12 @@ class UserForm extends React.Component {
     const { student } = this.props;
     if (student) {
       this.setState({
-        name: this.props.student.name,
-        school: this.props.student.school,
+      first_name: student.first_name,
+      last_name: student.last_name,
+      email: student.email,
+      image: student.image,
+      password: student.password,
+      school: student.school
       });
     }
   }
@@ -61,6 +65,16 @@ class UserForm extends React.Component {
     return (
       <div>
         <form onSubmit={student ? onSubmitEdit : onSubmit}>
+        <FormControl
+            style={{
+              marginLeft: "10px",
+              minWidth: "240px",
+            }}
+          >
+          <div style={{
+            display: "flex",
+            flexDirection: "column"
+          }}>
           {inputs.map((input, idx) => (
             <TextField
               key={idx}
@@ -77,21 +91,12 @@ class UserForm extends React.Component {
               }
             />
           ))}
-          <FormControl
-            style={{
-              marginLeft: "10px",
-              minWidth: "240px",
-            }}
-          >
-            <InputLabel id="schoolSelectLabel">
-              School That You Attend
-            </InputLabel>
             <Select
               name="school"
               value={school}
               onChange={onChange}
               autoWidth
-              labelId="schoolSelectLabel"
+              label="School That You Attend"
             >
               {schools.length > 0 ? (
                 schools.map((school) => (
@@ -103,6 +108,7 @@ class UserForm extends React.Component {
                 <MenuItem value={null}>No Schools to Choose From</MenuItem>
               )}
             </Select>
+          </div>
           </FormControl>
           <Button
             type="submit"
@@ -118,10 +124,11 @@ class UserForm extends React.Component {
   }
 }
 
-const stateToProps = ({ schools }, { student }) => {
+const stateToProps = ({ schools }, { student, history }) => {
   return {
     schools,
     student,
+    history
   };
 };
 

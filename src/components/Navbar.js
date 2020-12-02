@@ -31,12 +31,6 @@ const Navbar = ({ sideMenuToggle, dialogToggle }) => {
   );
 };
 
-// const stateToProps = ({ toggles }) => {
-//   return {
-//     sideMenu: toggles.sideMenu,
-//   };
-// };
-
 const dispatchToProps = (dispatch) => {
   return {
     sideMenuToggle: () => dispatch(toggleSideMenu()),
