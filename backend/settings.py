@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'corsheaders',
-    'django_seed'
+    'django_seed',
+    'rest_framework.authtoken',
+    'dj_rest_auth'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,19 @@ ALLOWED_HOSTS = []
 CORS_ORIGIN_ALLOW_ALL = True
 
 AUTH_USER_MODEL = 'api.User'
+
+# DJ-REST-AUTH Settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True   
+ACCOUNT_USERNAME_REQUIRED = False
+
+AUTHENTICATION_BACKENDS = (
+ # Needed to login by username in Django admin, regardless of `allauth`
+ "django.contrib.auth.backends.ModelBackend",
+
+ # `allauth` specific authentication methods, such as login by e-mail
+ "allauth.account.auth_backends.AuthenticationBackend",
+)

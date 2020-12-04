@@ -27,6 +27,7 @@ class StudentsSchoolsApiTest(TestCase):
         self.factory = APIRequestFactory()
         self.school1 = School.objects.create(name="Test School 1")
         School.objects.create(name="Test School 2")
+        User.objects.create_user("testy@testy.com", "password")
     def test_get_schools(self):
         request = self.factory.get('/api/schools/')
         response = SchoolList.as_view()(request)
@@ -52,7 +53,6 @@ class StudentsSchoolsApiTest(TestCase):
         self.assertEqual(len(User.objects.all()), 1)
         self.assertEqual(len(Student.objects.all()), 1)
         self.assertEqual(response.data['first_name'], "Blake")
-
-        
-
+    def test_login_api(self):
+        request = self.factory.post('/api/login', {"testy@testy.com", "paswword"})
     
