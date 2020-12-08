@@ -1,10 +1,13 @@
+from django.db import reset_queries
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 from .models import School, Student
 from .views import SchoolList, UserCreation
 from django.contrib.auth import get_user_model
+from dj_rest_auth.views import LoginView
 
 User = get_user_model()
+
 # Create your tests here.
 
 class UserandAuthenicationTest(TestCase):
@@ -50,9 +53,11 @@ class StudentsSchoolsApiTest(TestCase):
           format="json")
         response = UserCreation.as_view()(request)
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(len(User.objects.all()), 1)
-        self.assertEqual(len(Student.objects.all()), 1)
+        self.assertEqual(len(User.objects.all()), 2)
+        self.assertEqual(len(Student.objects.all()), 2)
         self.assertEqual(response.data['first_name'], "Blake")
     def test_login_api(self):
-        request = self.factory.post('/api/login', {"testy@testy.com", "paswword"})
+        request = self.factory.post('https:localhost:8000/api/login/login', {"email":"testy@testy.com", "password":"password"}, format='json')
+        response = LoginView.as_view()(request)
+        self.assertEqual(response, {})
     

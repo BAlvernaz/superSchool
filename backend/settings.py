@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_seed',
     'rest_framework.authtoken',
-    'dj_rest_auth'
+    'dj_rest_auth',
+    'django.contrib.sites'
 ]
 
 MIDDLEWARE = [
