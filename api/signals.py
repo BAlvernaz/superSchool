@@ -9,4 +9,3 @@ User = get_user_model()
 def create_user_profile(sender, instance, created, **kwargs):
     if created and sender.is_student:
         Student.objects.create(profile=instance)
-    

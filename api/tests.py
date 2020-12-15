@@ -10,7 +10,6 @@ from rest_framework.test import APIClient
 
 User = get_user_model()
 client = APIClient()
-
 # Create your tests here.
 
 class UserandAuthenicationTest(TestCase):
