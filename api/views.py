@@ -3,6 +3,7 @@ from api.serializer import StudentSerializer, SchoolSerializer, UserSerializer
 from rest_framework import generics, permissions
 from django.contrib.auth import get_user_model
 
+
 User = get_user_model()
 
 # Create your views here.

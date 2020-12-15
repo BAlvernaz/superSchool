@@ -1,12 +1,15 @@
 from django.db import reset_queries
-from django.test import TestCase
+from django.http import response
+from django.test import TestCase, client
 from rest_framework.test import APIRequestFactory
 from .models import School, Student
 from .views import SchoolList, UserCreation
 from django.contrib.auth import get_user_model
 from dj_rest_auth.views import LoginView
+from rest_framework.test import APIClient
 
 User = get_user_model()
+client = APIClient()
 
 # Create your tests here.
 
@@ -42,22 +45,22 @@ class StudentsSchoolsApiTest(TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(len(School.objects.all()), 3)
     def test_register_api(self):
-        request = self.factory.post('/api/register/', 
+        response = client.post('/api/auth/reg/', 
         { "email":"test@test.com", 
-          "password":"password", 
+          "password1":"10wer1232",
+          "password2": "10wer1232",  
           "first_name": "Blake",
           "last_name": "Alvernaz", 
           "school": self.school1.id, 
           "image": "No Image",
           "is_student": True}, 
           format="json")
-        response = UserCreation.as_view()(request)
-        self.assertEqual(response.status_code, 201)
+        print(response)
+        self.assertEqual(response, {})
         self.assertEqual(len(User.objects.all()), 2)
         self.assertEqual(len(Student.objects.all()), 2)
         self.assertEqual(response.data['first_name'], "Blake")
     def test_login_api(self):
-        request = self.factory.post('https:localhost:8000/api/login/login', {"email":"testy@testy.com", "password":"password"}, format='json')
-        response = LoginView.as_view()(request)
-        self.assertEqual(response, {})
+        response = client.post('/api/auth/login/', {"email":"testy@testy.com", "password":"password"})
+        self.assertEqual(response.status_code, 200)
     
