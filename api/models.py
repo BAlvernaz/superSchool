@@ -22,7 +22,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
-    school = models.ForeignKey(School, related_name="personnel", on_delete=models.CASCADE, blank=True, null=True)
     image = models.CharField(max_length=255, blank=True, null=True)
 
     is_staff = models.BooleanField(default=False)

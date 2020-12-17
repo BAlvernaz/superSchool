@@ -16,12 +16,12 @@ class UserandAuthenicationTest(TestCase):
     def setUp(self):
         self.school1 = School.objects.create(name="Test School 1")
     def test_create_user(self):
-      testStudentUser = User.objects.create_user( email="Test@test.com", password="password", first_name="Test", last_name="Testy", is_student=True, image="No Image", school=self.school1)
+      testStudentUser = User.objects.create_user( email="Test@test.com", password="password", first_name="Test", last_name="Testy", is_student=True, image="No Image")
       self.assertEqual(testStudentUser.get_full_name(), "Test Testy")
       self.assertTrue(testStudentUser.is_student)
       self.assertEqual(len(Student.objects.all()), 1)
     def test_create_superuser(self):
-      testSuperUser = User.objects.create_superuser("super@super.com","password", first_name="Super", last_name="User", image="No Image", school=None)
+      testSuperUser = User.objects.create_superuser("super@super.com","password", first_name="Super", last_name="User", image="No Image")
       self.assertEqual(testSuperUser.get_full_name(), "Super User")
       self.assertTrue(testSuperUser.is_staff)
       self.assertTrue(testSuperUser.is_superuser)
@@ -50,16 +50,16 @@ class StudentsSchoolsApiTest(TestCase):
           "password2": "10wer1232",  
           "first_name": "Blake",
           "last_name": "Alvernaz", 
-          "school": self.school1.id, 
           "image": "No Image",
           "is_student": True}, 
           format="json")
-        print(response)
-        self.assertEqual(response, {})
+        print(response.data)
+        self.assertEqual(response.status_code, 201)
         self.assertEqual(len(User.objects.all()), 2)
-        self.assertEqual(len(Student.objects.all()), 2)
-        self.assertEqual(response.data['first_name'], "Blake")
+        self.assertEqual(len(Student.objects.all()), 1)
+        self.assertTrue(response.data['key'])
     def test_login_api(self):
         response = client.post('/api/auth/login/', {"email":"testy@testy.com", "password":"password"})
         self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.data['key'])
     

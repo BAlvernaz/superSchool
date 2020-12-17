@@ -7,5 +7,5 @@ User = get_user_model()
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    if created and sender.is_student:
+    if created and instance.is_student:
         Student.objects.create(profile=instance)

@@ -49,7 +49,7 @@ class CustomRegisterSerializer(RegisterSerializer):
    password2 = serializers.CharField(required=True, write_only=True)
    is_student = serializers.BooleanField(default=True, write_only=True)
    is_teacher = serializers.BooleanField(default=False, write_only=True)
-   school = PrimaryKeyRelatedField(read_only=True)
+
 
    class Meta:
         model = User
@@ -65,13 +65,12 @@ class CustomRegisterSerializer(RegisterSerializer):
                  first_name=self.validated_data['first_name'],
                  last_name=self.validated_data['last_name'],
                  is_teacher=self.validated_data['is_teacher'],
-                 is_student=self.validated_data['is_student'],
-                 school=self.validated_data['school'])
-      password = self.validated_data['password']
+                 is_student=self.validated_data['is_student'])
+      password1 = self.validated_data['password1']
       password2 = self.validated_data['password2']
-      if password != password2:
+      if password1 != password2:
             raise serializers.ValidationError({'password':'Passwords must match.'})
-      user.set_password(password)
+      user.set_password(password1)
       user.save()
       return user
 
