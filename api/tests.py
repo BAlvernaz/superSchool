@@ -16,7 +16,7 @@ class UserandAuthenicationTest(TestCase):
     def setUp(self):
         self.school1 = School.objects.create(name="Test School 1")
     def test_create_user(self):
-      testStudentUser = User.objects.create_user( email="Test@test.com", password="password", first_name="Test", last_name="Testy", is_student=True, image="No Image")
+      testStudentUser = User.objects.create_user( "Test@test.com", "password", self.school1.id, first_name="Test", last_name="Testy", is_student=True, image="No Image")
       self.assertEqual(testStudentUser.get_full_name(), "Test Testy")
       self.assertTrue(testStudentUser.is_student)
       self.assertEqual(len(Student.objects.all()), 1)
@@ -30,9 +30,9 @@ class UserandAuthenicationTest(TestCase):
 class StudentsSchoolsApiTest(TestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
-        self.school1 = School.objects.create(name="Test School 1")
+        self.school1 = School.objects.create(name="Test School 1", image='no')
         School.objects.create(name="Test School 2")
-        User.objects.create_user("testy@testy.com", "password")
+        User.objects.create_user("testy@testy.com", "password", self.school1.id)
     def test_get_schools(self):
         request = self.factory.get('/api/schools/')
         response = SchoolList.as_view()(request)
@@ -46,18 +46,18 @@ class StudentsSchoolsApiTest(TestCase):
     def test_register_api(self):
         response = client.post('/api/auth/reg/', 
         { "email":"test@test.com", 
-          "password1":"10wer1232",
-          "password2": "10wer1232",  
+          "password":"10wer1232",
           "first_name": "Blake",
           "last_name": "Alvernaz", 
           "image": "No Image",
-          "is_student": True}, 
+          "is_student": True,
+          "school": self.school1.id},
           format="json")
-        print(response.data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(len(User.objects.all()), 2)
         self.assertEqual(len(Student.objects.all()), 1)
-        self.assertTrue(response.data['key'])
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data['email'], "test@test.com")
     def test_login_api(self):
         response = client.post('/api/auth/login/', {"email":"testy@testy.com", "password":"password"})
         self.assertEqual(response.status_code, 200)

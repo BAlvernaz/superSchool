@@ -8,7 +8,7 @@ User = get_user_model()
 
 # Create your views here.
 
-class StudentList(generics.ListAPIView):
+class StudentList(generics.ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 

@@ -11,7 +11,7 @@ urlpatterns = [
     path('schools/', views.SchoolList.as_view()),
     path('schools/<str:pk>/', views.SchoolDetail.as_view()),
     path('auth/',  include('dj_rest_auth.urls')),
-    path('auth/reg/', include('dj_rest_auth.registration.urls')),
+    path('auth/reg/', views.UserCreation.as_view()),
 
 ]
 
