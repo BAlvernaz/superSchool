@@ -62,4 +62,7 @@ class StudentsSchoolsApiTest(TestCase):
         response = client.post('/api/auth/login/', {"email":"testy@testy.com", "password":"password"})
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.data['key'])
-    
+        response2 = client.get('/api/auth/user/')
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(response2.data['email'], "testy@testy.com")
+

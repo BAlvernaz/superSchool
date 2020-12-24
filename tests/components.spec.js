@@ -17,7 +17,7 @@ import StudentList from "../src/components/StudentList";
 import Routes from "../src/components/Routes";
 import SchoolList from "../src/components/SchoolList";
 import StudentListCard from "../src/components/StudentListCard";
-import { Button, IconButton, Select, TextField } from "@material-ui/core";
+import { Button, Dialog, IconButton, Select, TextField } from "@material-ui/core";
 import SideMenu from "../src/components/SideMenu";
 import UserForm from "../src/components/UserForm";
 import UserDialog from "../src/components/UserDialog";
@@ -131,7 +131,7 @@ describe("Navbar Component", () => {
   const wrapper = shallow(<Navbar store={store} />);
   test("Contains An AppBar, TypoGraphy, Button", () => {
     expect(wrapper.find("WithStyles(ForwardRef(AppBar))")).toHaveLength(1);
-    expect(wrapper.find("WithStyles(ForwardRef(Button))")).toHaveLength(1);
+    expect(wrapper.find(Button)).toHaveLength(1);
     expect(wrapper.find("WithStyles(ForwardRef(Typography))")).toHaveLength(1);
   });
   describe("onClick Methods", () => {
@@ -148,6 +148,14 @@ describe("Navbar Component", () => {
       sideMenuToggle.prop("onClick")();
       expect(store.dispatch).toHaveBeenCalled();
     });
+    test("Register Menu Toggle", () => {
+      const openRegDialog = wrapper.find(Button).filterWhere(n => n.props().to === "/register")
+      expect(openRegDialog).toHaveLength(1)
+      const regDialogWrapper = shallow(<UserDialog store={store}  match={{params: {id: null}}} toggle={false} />)
+      expect(regDialogWrapper.find(Dialog).props().open).toBe(false)
+      
+      
+    })
   });
 });
 
