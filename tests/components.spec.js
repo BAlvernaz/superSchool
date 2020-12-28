@@ -24,7 +24,7 @@ import UserDialog from "../src/components/UserDialog";
 
 let state = {
   toggles: {
-    editStudentDialog: false,
+    userFormDialog: false,
     sideMenu: false,
   },
   schools: [],
@@ -68,7 +68,6 @@ describe("App and Route Component", () => {
 describe("Student List Component", () => {
   state = {
     toggles: {
-      editStudentDialog: true,
       sideMenu: false,
     },
     schools: [
@@ -149,12 +148,17 @@ describe("Navbar Component", () => {
       expect(store.dispatch).toHaveBeenCalled();
     });
     test("Register Menu Toggle", () => {
+      state = {
+        toggles: {
+          userFormDialog: false
+        }
+      }
       const openRegDialog = wrapper.find(Button).filterWhere(n => n.props().to === "/register")
       expect(openRegDialog).toHaveLength(1)
-      const regDialogWrapper = shallow(<UserDialog store={store}  match={{params: {id: null}}} toggle={false} />)
+      const regDialogWrapper = shallow(<UserDialog store={store} match={{params:{}}}/>)
       expect(regDialogWrapper.find(Dialog).props().open).toBe(false)
-      
-      
+      openRegDialog.prop("onClick")()
+      expect(store.dispatch).toHaveBeenCalled()
     })
   });
 });
@@ -163,12 +167,22 @@ describe("UserForm Component", () => {
   beforeEach(() => {
     store.dispatch.mockClear();
   });
+
   const shallow = createShallow({ untilSelector: "UserForm" });
   const wrapper = shallow(<UserForm store={store} />);
-  test("Should Have Five TextFields, One Select, One Button, Six State Properties", () => {
-    expect(wrapper.find(TextField)).toHaveLength(5);
+  test("One Select, One Button, Six State Properties", () => {
     expect(wrapper.find(Select)).toHaveLength(1);
     expect(wrapper.find(Button)).toHaveLength(1);
     expect(Object.keys(wrapper.state())).toHaveLength(6);
   });
+  test("Contains the Correct Textfields - first_name, last_name, email, password, image", () => {
+    const textFields = wrapper.find(TextField).map(tf => tf.prop("name"))
+    expect(textFields).toHaveLength(5)
+    expect(textFields.includes('first_name'))
+    expect(textFields.includes('last_name'))
+    expect(textFields.includes('email'))
+    expect(textFields.includes('password'))
+    expect(textFields.includes('image'))
+
+  })
 });
