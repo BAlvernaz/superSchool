@@ -17,7 +17,7 @@ import StudentList from "../src/components/StudentList";
 import Routes from "../src/components/Routes";
 import SchoolList from "../src/components/SchoolList";
 import StudentListCard from "../src/components/StudentListCard";
-import { Button, Dialog, IconButton, Select, TextField } from "@material-ui/core";
+import { Button, Dialog, IconButton, Radio, Select, TextField } from "@material-ui/core";
 import SideMenu from "../src/components/SideMenu";
 import UserForm from "../src/components/UserForm";
 import UserDialog from "../src/components/UserDialog";
@@ -173,16 +173,24 @@ describe("UserForm Component", () => {
   test("One Select, One Button, Six State Properties", () => {
     expect(wrapper.find(Select)).toHaveLength(1);
     expect(wrapper.find(Button)).toHaveLength(1);
-    expect(Object.keys(wrapper.state())).toHaveLength(6);
+    expect(Object.keys(wrapper.state())).toHaveLength(8);
   });
   test("Contains the Correct Textfields - first_name, last_name, email, password, image", () => {
     const textFields = wrapper.find(TextField).map(tf => tf.prop("name"))
-    expect(textFields).toHaveLength(5)
-    expect(textFields.includes('first_name'))
-    expect(textFields.includes('last_name'))
-    expect(textFields.includes('email'))
-    expect(textFields.includes('password'))
-    expect(textFields.includes('image'))
+    expect(textFields).toHaveLength(6)
+    expect(textFields.includes('first_name')).toBeTruthy()
+    expect(textFields.includes('last_name')).toBeTruthy()
+    expect(textFields.includes('email')).toBeTruthy()
+    expect(textFields.includes('password')).toBeTruthy()
+    expect(textFields.includes('password2')).toBeTruthy()
+    expect(textFields.includes('image')).toBeTruthy()
 
+  })
+
+  test("Contains the Correct Radio Permission Toggles - is_student, is_teacher", () => {
+    const radios = wrapper.find(Radio).map(radio => radio.prop('name'))
+    expect(radios).toHaveLength(2)
+    expect(radios.includes("is_student")).toBeTruthy()
+    expect(radios.includes("is_teacher")).toBeTruthy()
   })
 });
