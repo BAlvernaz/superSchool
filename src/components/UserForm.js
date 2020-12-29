@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { addStudent, editStudent } from "../reducers/actions";
 import { toggleDialog } from "../reducers/toggleActions"
 
-const inputs = ["first_name", "last_name", "email", "image", "password"];
+const inputs = ["first_name", "last_name", "email", "image", "password", "password2"];
 const radios = ["is_student", "is_teacher"]
 
 class UserForm extends React.Component {
@@ -23,6 +23,7 @@ class UserForm extends React.Component {
       email: "",
       image: "",
       password: "",
+      password2: "",
       school: "",
       is_student: true,
       is_teacher: false
@@ -40,7 +41,6 @@ class UserForm extends React.Component {
       last_name: student.last_name,
       email: student.email,
       image: student.image,
-      password: student.password,
       school: student.school,
       is_student: student.is_student,
       is_teacher: student.is_teacher
@@ -57,9 +57,21 @@ class UserForm extends React.Component {
   }
 
   onSubmit(ev) {
+    const { first_name, last_name, password, image, email, is_student, is_teacher, password2, school } = this.state
     ev.preventDefault();
     this.props.dialogToggle();
-    this.props.newStudent(this.state);
+    this.props.newStudent(
+      {
+      email,
+      password,
+      first_name,
+      last_name,
+      image,
+      is_student,
+      is_teacher,
+      school,
+      password: password2
+    });
     this.props.history.push('/students')
   }
 
@@ -69,7 +81,7 @@ class UserForm extends React.Component {
     this.props.studentEdit(this.props.student.id, this.state );
   }
   render() {
-    const { school } = this.state;
+    const { school, password, password2 } = this.state;
     const { schools, student } = this.props;
     const { onSubmit, onChange, onSubmitEdit } = this;
     return (
@@ -100,11 +112,6 @@ class UserForm extends React.Component {
                   : "text"
               }/>
           ))}
-            <TextField
-            label="password2"
-            defaultValue=""
-            name="password2"
-            />
             <Select
               name="school"
               value={school}
@@ -143,6 +150,10 @@ class UserForm extends React.Component {
             color="primary"
             disableElevation
             variant="contained"
+            disabled={password !== password2 ?
+                      true :
+                      !password ? 
+                      true : false}
           >
             Submit
           </Button>

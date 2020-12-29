@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from api.models import Student, School
 from django.contrib.auth import get_user_model
-
+from dj_rest_auth.serializers import UserDetailsSerializer
 User = get_user_model()
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -32,6 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
       last_name=validated_data['last_name'],
       image = validated_data['image'],
       is_student = validated_data['is_student'],
+      is_teacher = validated_data['is_teacher'],
     )
     return user
 
@@ -77,7 +78,5 @@ class UserSerializer(serializers.ModelSerializer):
 #                  is_student=self.validated_data['is_student'],
 #                  school=self.validated_data['school'])
 #       return user
-
-
 
 

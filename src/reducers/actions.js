@@ -42,7 +42,7 @@ const _getStudents = (students) => ({
     return async (dispatch) => {
       try {
         const response = await axios.post(
-          "http://localhost:8000/api/register/",
+          "http://localhost:8000/api/auth/reg/",
           data
         );
         dispatch(_addStudent(response.data));
