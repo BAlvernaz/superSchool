@@ -9,7 +9,7 @@ import {
 import { studentReducer } from "../src/reducers/studentReducer";
 import { schoolReducer } from "../src/reducers/schoolReducer";
 import { togglerReducer } from "../src/reducers/togglerReducer"
-import {  SIDEMENU_TOGGLE, USER_FORM_DIALOG_TOGGLE } from "../src/reducers/toggleActions";
+import {  SIDEMENU_TOGGLE, USER_FORM_DIALOG_TOGGLE, LOGIN_FORM_DIALOG_TOGGLE } from "../src/reducers/toggleActions";
 import UserDialog from "../src/components/UserDialog";
 
 describe("Students Reducer", () => {
@@ -142,7 +142,8 @@ describe("School Reducer", () => {
 describe("Toggle Reducer", () => {
   const fakeToggles = {
     sideMenu: false,
-    userFormDialog: false  }
+    userFormDialog: false,  
+    loginFormDialog: false}
     test('Toggle SideMenu', () => {
         expect(togglerReducer(fakeToggles,
                               {type: SIDEMENU_TOGGLE}))
@@ -153,6 +154,9 @@ describe("Toggle Reducer", () => {
     })
     test("Toggle User Form Dialog", () => {
       expect(togglerReducer(fakeToggles, {type: USER_FORM_DIALOG_TOGGLE})).toEqual({...fakeToggles, userFormDialog: true})
+    })
+    test("Toggle User Form Dialog", () => {
+      expect(togglerReducer(fakeToggles, {type: LOGIN_FORM_DIALOG_TOGGLE})).toEqual({...fakeToggles, loginFormDialog: true})
     })
 })
 

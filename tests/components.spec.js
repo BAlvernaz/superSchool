@@ -21,7 +21,7 @@ import { Button, Dialog, IconButton, Radio, Select, TextField } from "@material-
 import SideMenu from "../src/components/SideMenu";
 import UserForm from "../src/components/UserForm";
 import UserDialog from "../src/components/UserDialog";
-
+import LoginForm from "../src/components/LoginForm"
 let state = {
   toggles: {
     userFormDialog: false,
@@ -173,7 +173,7 @@ describe("UserForm Component", () => {
   test("One Select, One Button, Six State Properties", () => {
     expect(wrapper.find(Select)).toHaveLength(1);
     expect(wrapper.find(Button)).toHaveLength(1);
-    expect(Object.keys(wrapper.state())).toHaveLength(8);
+    expect(Object.keys(wrapper.state())).toHaveLength(9);
   });
   test("Contains the Correct Textfields - first_name, last_name, email, password, image", () => {
     const textFields = wrapper.find(TextField).map(tf => tf.prop("name"))
@@ -184,7 +184,6 @@ describe("UserForm Component", () => {
     expect(textFields.includes('password')).toBeTruthy()
     expect(textFields.includes('password2')).toBeTruthy()
     expect(textFields.includes('image')).toBeTruthy()
-
   })
 
   test("Contains the Correct Radio Permission Toggles - is_student, is_teacher", () => {
@@ -194,3 +193,14 @@ describe("UserForm Component", () => {
     expect(radios.includes("is_teacher")).toBeTruthy()
   })
 });
+
+describe("Login Component",() => {
+  const shallow = createShallow({ untilSelector: "LoginForm"})
+  const wrapper = shallow(<LoginForm store={store} />)
+  test("Contains Two TextFields - Email Password", () => {
+    const textFields = wrapper.find(TextField).map(tf => tf.prop("name"))
+    const buttons = wrapper.find(Button).map(btn => btn.prop("type"))
+    expect(textFields).toHaveLength(2)
+    expect(buttons).toHaveLength(2)
+  } )
+})
