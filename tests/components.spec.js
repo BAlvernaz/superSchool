@@ -202,5 +202,5 @@ describe("Login Component",() => {
     const buttons = wrapper.find(Button).map(btn => btn.prop("type"))
     expect(textFields).toHaveLength(2)
     expect(buttons).toHaveLength(2)
-  } )
+  })
 })
