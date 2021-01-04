@@ -95,10 +95,39 @@ export const getSchools = () => {
     }
 }
 
+//USER ACTION
+
+const LOGIN = "LOGIN"
+
+const _login = (data) => ({
+  type: "LOGIN",
+  data
+})
+
+export const login = (creds) => {
+  return async dispatch => {
+    try {
+    const loginResponse = await axios.post("http://localhost:8000/api/auth/login/", creds)
+    if (loginResponse.status === 200) {
+      const userInfoResponse = await axios.get("http://localhost:8000/api/auth/user")
+      console.log(userInfoResponse.data)
+      return dispatch(_login(userInfoResponse.data))
+    }
+    } catch (err) {
+      console.error(err)
+      // TODO: Change to an Error Reducer
+    }
+  }
+}
+
 export {
     GET_SCHOOLS,
     GET_STUDENTS,
     EDIT_STUDENT,
     REMOVE_STUDENT,
-    ADD_STUDENT
+    ADD_STUDENT,
+    LOGIN
 }
+
+
+

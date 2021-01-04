@@ -4,23 +4,24 @@ from django.contrib.auth import get_user_model
 from dj_rest_auth.serializers import UserDetailsSerializer
 User = get_user_model()
 
+class StudentProfileSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = User
+    fields = ["first_name", "last_name", "image", "email"]
 class StudentSerializer(serializers.ModelSerializer):
+    profile = StudentProfileSerializer()
     class Meta:
       model = Student
       fields = ["gpa", "profile", "id", 'school']
 
 class SchoolSerializer(serializers.ModelSerializer):
-
     class Meta:
       model = School
       fields = ['id', 'name', 'image' ]
 
 
 class UserSerializer(serializers.ModelSerializer):
-  is_student = serializers.BooleanField(default=True, write_only=True)
-  is_teacher = serializers.BooleanField(default=False, write_only=True)
   password = serializers.CharField(write_only=True)
-  student = StudentSerializer(many=False, required=False)
   school = serializers.CharField()
 
   def create(self, validated_data):
@@ -39,7 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = User
-    fields = ['first_name', 'last_name', 'email', 'password', 'image', 'student', 'school', 'is_student', 'is_teacher']
+    fields = ['first_name', 'last_name', 'email', 'password', 'image', 'school', 'is_student', 'is_teacher']
 
 
       #Customizing DJ-REST-AUTH - Not Quite Working as Expected

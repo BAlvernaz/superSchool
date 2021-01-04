@@ -1,11 +1,17 @@
-import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  ButtonGroup,
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
 import { connect } from "react-redux";
-import { toggleDialog, toggleSideMenu } from "../reducers/toggleActions";
+import { toggleDialog, toggleSideMenu, toggleLogin } from "../reducers/toggleActions";
 import { Link as RouterLink } from "react-router-dom";
 
-const Navbar = ({ sideMenuToggle, dialogToggle }) => {
+const Navbar = ({ sideMenuToggle, dialogToggle, loginToggle }) => {
   return (
     <div>
       <AppBar position="static">
@@ -22,9 +28,20 @@ const Navbar = ({ sideMenuToggle, dialogToggle }) => {
             }}
           />
           <Typography variant="h6">Super School</Typography>
-          <div>
-            <Button variant="contained" component={RouterLink} to={"/register"} onClick={() => dialogToggle() }>Register</Button>
-          </div>
+          <ButtonGroup>
+           <Button
+              variant="contained"
+              component={RouterLink}
+              to={"/register"}
+              onClick={() => dialogToggle()}
+            >
+              Register
+            </Button>
+            <Button variant="contained" component={RouterLink}
+              to={"/login"} onClick={() => loginToggle()}>
+              Login
+            </Button> 
+          </ButtonGroup>
         </Toolbar>
       </AppBar>
     </div>
@@ -34,7 +51,8 @@ const Navbar = ({ sideMenuToggle, dialogToggle }) => {
 const dispatchToProps = (dispatch) => {
   return {
     sideMenuToggle: () => dispatch(toggleSideMenu()),
-    dialogToggle: () => dispatch(toggleDialog())
+    dialogToggle: () => dispatch(toggleDialog()),
+    loginToggle: () => dispatch(toggleLogin()),
   };
 };
 

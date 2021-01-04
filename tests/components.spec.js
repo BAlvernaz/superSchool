@@ -17,11 +17,13 @@ import StudentList from "../src/components/StudentList";
 import Routes from "../src/components/Routes";
 import SchoolList from "../src/components/SchoolList";
 import StudentListCard from "../src/components/StudentListCard";
-import { Button, Dialog, IconButton, Radio, Select, TextField } from "@material-ui/core";
+import { Button, Dialog, IconButton, Radio, Select, TextField, AppBar } from "@material-ui/core";
 import SideMenu from "../src/components/SideMenu";
 import UserForm from "../src/components/UserForm";
 import UserDialog from "../src/components/UserDialog";
 import LoginForm from "../src/components/LoginForm"
+import LoginDialog from "../src/components/LoginDialog"
+
 let state = {
   toggles: {
     userFormDialog: false,
@@ -62,6 +64,7 @@ describe("App and Route Component", () => {
     expect(pathMap["/schools"]).toBe(SchoolList);
     expect(pathMap["/students/edit/:id"]).toBe(UserDialog);
     expect(pathMap["/register"]).toBe(UserDialog);
+    expect(pathMap["/login"]).toBe(LoginDialog)
   });
 });
 
@@ -128,9 +131,9 @@ describe("Navbar Component", () => {
   });
   let shallow = createShallow({ untilSelector: "Navbar" });
   const wrapper = shallow(<Navbar store={store} />);
-  test("Contains An AppBar, TypoGraphy, Button", () => {
-    expect(wrapper.find("WithStyles(ForwardRef(AppBar))")).toHaveLength(1);
-    expect(wrapper.find(Button)).toHaveLength(1);
+  test("Contains An AppBar, TypoGraphy,  Two Buttons", () => {
+    expect(wrapper.find(AppBar)).toHaveLength(1);
+    expect(wrapper.find(Button)).toHaveLength(2);
     expect(wrapper.find("WithStyles(ForwardRef(Typography))")).toHaveLength(1);
   });
   describe("onClick Methods", () => {

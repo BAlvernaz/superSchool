@@ -27,14 +27,14 @@ const StudentListCard = ({
       }}
     >
       <CardActionArea>
-        <CardMedia style={{ height: "140px" }} image={student.image} />
+        <CardMedia style={{ height: "140px" }} image={student.profile.image} />
         <CardContent>
           <Typography style={{ fontSize: 18 }}>
-            {"Name: " + student.first_name}
+            {"Name: " + student.profile.first_name + " " + student.profile.last_name}
           </Typography>
           <Typography>
             {"Attending: " +
-              schools.find((school) => school.id === student.school)}
+              schools.find((school) => school.id === student.school).name}
           </Typography>
         </CardContent>
       </CardActionArea>

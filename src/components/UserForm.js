@@ -93,7 +93,8 @@ class UserForm extends React.Component {
               minWidth: "240px",
             }}
           >
-          <div style={{
+          <div
+          style={{
             display: "flex",
             flexDirection: "column"
           }}>
@@ -131,7 +132,7 @@ class UserForm extends React.Component {
             </Select>
             {radios.map(radio => {
               return (
-                <div>
+                <div key={radio}>
               <label htmlFor={radio}>{radio.slice(3).split("")
               .map((char,idx) => {
                 if(idx === 0) {

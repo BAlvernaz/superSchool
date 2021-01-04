@@ -4,13 +4,14 @@ import {
   EDIT_STUDENT,
   GET_STUDENTS,
   REMOVE_STUDENT,
-  GET_SCHOOLS
+  GET_SCHOOLS,
+  LOGIN
 } from "../src/reducers/actions";
 import { studentReducer } from "../src/reducers/studentReducer";
 import { schoolReducer } from "../src/reducers/schoolReducer";
 import { togglerReducer } from "../src/reducers/togglerReducer"
 import {  SIDEMENU_TOGGLE, USER_FORM_DIALOG_TOGGLE, LOGIN_FORM_DIALOG_TOGGLE } from "../src/reducers/toggleActions";
-import UserDialog from "../src/components/UserDialog";
+import { userReducer } from '../src/reducers/userReducer'
 
 describe("Students Reducer", () => {
   const student1UUID = uuidv4();
@@ -155,10 +156,14 @@ describe("Toggle Reducer", () => {
     test("Toggle User Form Dialog", () => {
       expect(togglerReducer(fakeToggles, {type: USER_FORM_DIALOG_TOGGLE})).toEqual({...fakeToggles, userFormDialog: true})
     })
-    test("Toggle User Form Dialog", () => {
+    test("Toggle User Login Form Dialog", () => {
       expect(togglerReducer(fakeToggles, {type: LOGIN_FORM_DIALOG_TOGGLE})).toEqual({...fakeToggles, loginFormDialog: true})
     })
 })
 
-
+describe("User Reducer", () => {
+   test("Initilal state", () => {
+     expect(userReducer({}, {type: LOGIN})).toEqual({})
+   })
+})
 
