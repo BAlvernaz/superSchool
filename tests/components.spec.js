@@ -110,8 +110,11 @@ describe("Student Card Component", () => {
       store={store}
       student={{
         id: "c715d01a-86eb-4f0d-8c90-ccec2be6c5ef",
-        name: "Test Studnet 1",
-        image: "https://picsum.photos/200/300",
+        profile: {
+          first_name: "Test",
+          last_name: "Student",
+          image: "https://picsum.photos/200/300"
+        },      
         gpa: 4.0,
         school: "109e16b2-b266-4443-b01c-6ac5b12738b7",
       }}

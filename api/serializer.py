@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from dj_rest_auth.serializers import UserDetailsSerializer
 User = get_user_model()
 
+#Student Profile - Using User
 class StudentProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
