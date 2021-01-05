@@ -23,7 +23,8 @@ class SchoolSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
   password = serializers.CharField(write_only=True)
   school = serializers.CharField()
-
+  is_student = serializers.BooleanField(default=True)
+  is_teacher = serializers.BooleanField(default=False)
   def create(self, validated_data):
     user = User.objects.create_user(
       validated_data['email'],
