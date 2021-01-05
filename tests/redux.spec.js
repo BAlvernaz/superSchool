@@ -13,6 +13,8 @@ import { togglerReducer } from "../src/reducers/togglerReducer"
 import {  SIDEMENU_TOGGLE, USER_FORM_DIALOG_TOGGLE, LOGIN_FORM_DIALOG_TOGGLE } from "../src/reducers/toggleActions";
 import { userReducer } from '../src/reducers/userReducer'
 
+
+// Simple Reducers Action Checks 
 describe("Students Reducer", () => {
   const student1UUID = uuidv4();
   const school1UUID = uuidv4();

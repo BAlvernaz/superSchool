@@ -113,7 +113,8 @@ describe("Student Card Component", () => {
         profile: {
           first_name: "Test",
           last_name: "Student",
-          image: "https://picsum.photos/200/300"
+          image: "https://picsum.photos/200/300",
+          email: "student@test.com"
         },      
         gpa: 4.0,
         school: "109e16b2-b266-4443-b01c-6ac5b12738b7",
