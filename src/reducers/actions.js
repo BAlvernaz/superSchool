@@ -67,7 +67,7 @@ const _getStudents = (students) => ({
   };
 
   export const editStudent = (studentId, student) => {
-    console.log(student)
+
     return async dispatch => {
       try {
         const response = await axios.put(`http://localhost:8000/api/students/${studentId}/`, student)
@@ -110,7 +110,6 @@ export const login = (creds) => {
     const loginResponse = await axios.post("http://localhost:8000/api/auth/login/", creds)
     if (loginResponse.status === 200) {
       const userInfoResponse = await axios.get("http://localhost:8000/api/auth/user")
-      console.log(userInfoResponse.data)
       return dispatch(_login(userInfoResponse.data))
     }
     } catch (err) {
