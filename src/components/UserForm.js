@@ -98,7 +98,7 @@ class UserForm extends React.Component {
             display: "flex",
             flexDirection: "column"
           }}>
-          {inputs.map((input, idx) => (
+          {student ? inputs.map((input, idx) => (
             <TextField
               key={idx}
               label={input.replace("_", " ")}
@@ -112,7 +112,17 @@ class UserForm extends React.Component {
                   ? "email"
                   : "text"
               }/>
-          ))}
+          )) : inputs.filter(name => !name.includes("password")).map(<TextField
+            key={idx}
+            label={input.replace("_", " ")}
+            value={this.state[input]}
+            onChange={onChange}
+            name={input}
+            type={
+                  input === "email"
+                ? "email"
+                : "text"
+            }/>)}
             <Select
               name="school"
               value={school}

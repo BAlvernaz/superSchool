@@ -7,7 +7,7 @@ import UserDialog from "./UserDialog";
 import StudentList from "./StudentList";
 import LoginDialog from "./LoginDialog";
 
-const Routes = ({ studentEditDialog, register }) => {
+const Routes = () => {
   return (
     <div>
       <Route component={SideMenu} />

@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { toggleDialog, toggleSideMenu, toggleLogin } from "../reducers/toggleActions";
 import { Link as RouterLink } from "react-router-dom";
 
-const Navbar = ({ sideMenuToggle, dialogToggle, loginToggle }) => {
+const Navbar = ({ sideMenuToggle, dialogToggle, loginToggle, user }) => {
   return (
     <div>
       <AppBar position="static">
@@ -27,7 +27,8 @@ const Navbar = ({ sideMenuToggle, dialogToggle, loginToggle }) => {
               sideMenuToggle();
             }}
           />
-          <Typography variant="h6">Super School</Typography>
+
+         {Object.keys(user).length === 0 ? <Typography variant="h6">Super School</Typography> :  <Typography variant="h6">Super School: {`Welcome  ` } </Typography> }
           <ButtonGroup>
            <Button
               variant="contained"
@@ -47,6 +48,11 @@ const Navbar = ({ sideMenuToggle, dialogToggle, loginToggle }) => {
     </div>
   );
 };
+const stateToProps = ({ user }) => {
+  return {
+    user
+  }
+}
 
 const dispatchToProps = (dispatch) => {
   return {

@@ -72,9 +72,12 @@ class StudentsSchoolsApiTest(TestCase):
         user = client.get('/api/auth/user/')
         self.assertEqual(user.status_code, 200)
         self.assertEqual(user.data['email'], "testy@testy.com")
-        response = client.put("/api/auth/user/", {"email": "testyy@testyy.com"})
+        response = client.put("/api/auth/user/", {"email": "testyy@testyy.com", "first_name": "New", "last_name": "Name"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['email'], "testyy@testyy.com")
+        self.assertEqual(response.data['first_name'], "New")
+        user = client.get('/api/auth/user/')
+        self.assertEqual(user.data["email"], "testyy@testyy.com")
 
     
 

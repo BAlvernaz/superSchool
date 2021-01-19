@@ -38,24 +38,6 @@ const StudentListCard = ({
           </Typography>
         </CardContent>
       </CardActionArea>
-      <div
-        style={{
-          display: "flex",
-        }}
-      >
-        <IconButton
-          component={RouterLink}
-          to={`/students/edit/${student.id}`}
-        >
-          <EditIcon color="primary" />
-        </IconButton>
-        <IconButton onClick={() => deleteStudent(student.id)}>
-          <DeleteIcon color="error" />
-        </IconButton>
-        <IconButton component={RouterLink} to={`/students/view/${student.id}`}>
-          <PersonIcon />
-        </IconButton>
-      </div>
     </Card>
   );
 };

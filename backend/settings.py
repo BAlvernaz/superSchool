@@ -142,6 +142,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 AUTH_USER_MODEL = 'api.User'
 
 # DJ-REST-AUTH Settings
+
+REST_AUTH_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "api.serializer.UserProfileSerializer"
+}
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
