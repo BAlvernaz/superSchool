@@ -12,10 +12,10 @@ class StudentList(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     permission_classes = [permissions.AllowAny]
+    
 class StudentCreate(generics.CreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-
 
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
