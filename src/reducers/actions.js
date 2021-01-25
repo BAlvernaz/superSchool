@@ -98,10 +98,21 @@ export const getSchools = () => {
 //USER ACTION
 
 const LOGIN = "LOGIN"
+const USER_CHECK = "USER_CHECK"
+const LOGOUT ="LOGOUT"
 
 const _login = (data) => ({
-  type: "LOGIN",
+  type: LOGIN,
   data
+})
+
+const _userCheck = (data) => ({
+  type: USER_CHECK,
+  data
+})
+
+const _logout = () => ({
+  type: LOGOUT
 })
 
 export const login = (creds) => {
@@ -119,13 +130,39 @@ export const login = (creds) => {
   }
 }
 
+export const logout = () => {
+  return async dispatch => {
+    try {
+      const response = await axios.post("http://localhost:8000/api/auth/logout/")
+      console.log(response.status)
+    } catch (err) {
+      console.error(err)
+      // TODO: Change to an Error Reducer
+    }
+  }
+}
+
+export const userCheck = () => {
+  return async dispatch => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/auth/user")
+      return dispatch(_userCheck(response.data))
+    } catch {
+      console.error(err)
+      // TODO: Change to an Error Reducer
+    }
+  }
+}
+
 export {
     GET_SCHOOLS,
     GET_STUDENTS,
     EDIT_STUDENT,
     REMOVE_STUDENT,
     ADD_STUDENT,
-    LOGIN
+    LOGIN,
+    LOGOUT,
+    USER_CHECK
 }
 
 
