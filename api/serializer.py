@@ -1,14 +1,14 @@
 from rest_framework import serializers
 from api.models import Student, School
 from django.contrib.auth import get_user_model
-from dj_rest_auth.serializers import UserDetailsSerializer
+
 User = get_user_model()
 
 #Student Profile - Using User
 class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
-    fields = ["first_name", "last_name", "image", "email"]
+    fields = ["id", "first_name", "last_name", "image", "email"]
     
 class StudentSerializer(serializers.ModelSerializer):
     profile = UserProfileSerializer()

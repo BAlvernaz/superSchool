@@ -11,7 +11,7 @@ import {
 import { removeStudent } from "../reducers/actions";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Link as RouterLink } from "react-router-dom";
+
 import PersonIcon from "@material-ui/icons/Person";
 
 const StudentListCard = ({

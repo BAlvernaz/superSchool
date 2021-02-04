@@ -13,20 +13,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { studentEditDialog } = this.props;
     return (
       <Router>
-        <Routes studentEditDialog={studentEditDialog} />
+        <Routes />
       </Router>
     );
   }
 }
-
-const stateToProps = ({ toggles }) => {
-  return {
-    studentEditDialog: toggles.editStudentDialog,
-  };
-};
 
 const dispatchToProp = (dispatch) => {
   return {
@@ -36,4 +29,4 @@ const dispatchToProp = (dispatch) => {
   };
 };
 
-export default connect(stateToProps, dispatchToProp)(App);
+export default connect(null, dispatchToProp)(App);
