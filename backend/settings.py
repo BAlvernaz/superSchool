@@ -143,12 +143,17 @@ AUTH_USER_MODEL = 'api.User'
 
 # DJ-REST-AUTH Settings
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
 REST_AUTH_SERIALIZERS = {
     "USER_DETAILS_SERIALIZER": "api.serializer.UserProfileSerializer"
 }
-DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ]
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'

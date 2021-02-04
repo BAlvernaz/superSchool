@@ -9,7 +9,7 @@ export const userReducer = (state = {}, action) => {
             break;
         case LOGOUT:
             state = {}
-            break 
+            break;
     }
     return state
 }

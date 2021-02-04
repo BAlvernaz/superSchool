@@ -1,4 +1,7 @@
 import axios from "axios";
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true;
 
 // Student Actions 
 const GET_STUDENTS = "GET_STUDENTS";
@@ -134,7 +137,9 @@ export const logout = () => {
   return async dispatch => {
     try {
       const response = await axios.post("http://localhost:8000/api/auth/logout/")
-      console.log(response.status)
+      if (response.status === 200) {
+        return dispatch(_logout())
+      }
     } catch (err) {
       console.error(err)
       // TODO: Change to an Error Reducer
@@ -147,7 +152,7 @@ export const userCheck = () => {
     try {
       const response = await axios.get("http://localhost:8000/api/auth/user")
       return dispatch(_userCheck(response.data))
-    } catch {
+    } catch (err) {
       console.error(err)
       // TODO: Change to an Error Reducer
     }
