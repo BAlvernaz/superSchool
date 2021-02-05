@@ -96,8 +96,15 @@ class UserForm extends React.Component {
 
   onSubmitEdit(ev) {
     ev.preventDefault();
+    const {
+      first_name,
+      last_name,
+      image,
+      email,
+      school,
+    } = this.state;
     this.props.dialogToggle();
-    this.props.studentEdit(this.props.student.id, this.state);
+    this.props.studentEdit(this.props.student.id, {first_name, last_name, image, email, school});
   }
   render() {
     const { school, password, password2 } = this.state;
@@ -186,7 +193,7 @@ class UserForm extends React.Component {
                     />
                   </div>
                 );
-              }): "" }
+              }): ""}
             </div>
             {!student ? (
               <Button

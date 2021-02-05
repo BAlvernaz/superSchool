@@ -73,7 +73,7 @@ const _getStudents = (students) => ({
 
     return async dispatch => {
       try {
-        const response = await axios.put(`http://localhost:8000/api/students/${studentId}/`, student)
+        const response = await axios.put(`http://localhost:8000/api/auth/user/`, {first_name, last_name, email, image, })
         dispatch(_editStudent(response.data))
       } catch (err) {
         // TODO: Change to a Error Reducer

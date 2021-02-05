@@ -78,6 +78,6 @@ class StudentsSchoolsApiTest(TestCase):
         self.assertEqual(response.data['first_name'], "New")
         user = client.get('/api/auth/user/')
         self.assertEqual(user.data["email"], "testyy@testyy.com")
-
+        self.assertEqual(user.data["first_name"], "New")
     
 
