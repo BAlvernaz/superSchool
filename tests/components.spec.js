@@ -17,12 +17,20 @@ import StudentList from "../src/components/StudentList";
 import Routes from "../src/components/Routes";
 import SchoolList from "../src/components/SchoolList";
 import StudentListCard from "../src/components/StudentListCard";
-import { Button, Dialog, IconButton, Radio, Select, TextField, AppBar } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  IconButton,
+  Radio,
+  Select,
+  TextField,
+  AppBar,
+} from "@material-ui/core";
 import SideMenu from "../src/components/SideMenu";
 import UserForm from "../src/components/UserForm";
 import UserDialog from "../src/components/UserDialog";
-import LoginForm from "../src/components/LoginForm"
-import LoginDialog from "../src/components/LoginDialog"
+import LoginForm from "../src/components/LoginForm";
+import LoginDialog from "../src/components/LoginDialog";
 
 let state = {
   toggles: {
@@ -64,7 +72,7 @@ describe("App and Route Component", () => {
     expect(pathMap["/schools"]).toBe(SchoolList);
     expect(pathMap["/students/edit/:id"]).toBe(UserDialog);
     expect(pathMap["/register"]).toBe(UserDialog);
-    expect(pathMap["/login"]).toBe(LoginDialog)
+    expect(pathMap["/login"]).toBe(LoginDialog);
   });
 });
 
@@ -103,33 +111,53 @@ describe("Student List Component", () => {
   });
 });
 
-describe("Student Card Component", () => {
-  const shallow = createShallow({ untilSelector: "StudentListCard" });
-  const wrapper = shallow(
-    <StudentListCard
-      store={store}
-      student={{
+// describe("Student Card Component", () => {
+//   const shallow = createShallow({ untilSelector: "StudentListCard" });
+//   const wrapper = shallow(
+//     <StudentListCard
+//       store={store}
+//       student={{
+//         id: "c715d01a-86eb-4f0d-8c90-ccec2be6c5ef",
+//         profile: {
+//           first_name: "Test",
+//           last_name: "Student",
+//           image: "https://picsum.photos/200/300",
+//           email: "student@test.com",
+//         },
+//         gpa: 4.0,
+//         school: "109e16b2-b266-4443-b01c-6ac5b12738b7",
+//       }}
+//     />
+//   );
+// });
+
+describe("Navbar Component", () => {
+  state = {
+    toggles: {
+      sideMenu: false,
+    },
+    user: { },
+    schools: [
+      {
+        id: "109e16b2-b266-4443-b01c-6ac5b12738b7",
+        name: "Test School 1",
+        image: "No Image",
+      },
+    ],
+    students: [
+      {
         id: "c715d01a-86eb-4f0d-8c90-ccec2be6c5ef",
         profile: {
           first_name: "Test",
           last_name: "Student",
           image: "https://picsum.photos/200/300",
-          email: "student@test.com"
-        },      
+          email: "student@test.com",
+        },
         gpa: 4.0,
         school: "109e16b2-b266-4443-b01c-6ac5b12738b7",
-      }}
-    />
-  );
-  test("Should Contain Three Buttons/Icons - Edit, Delete, Profile", () => {
-    expect(wrapper.find(IconButton)).toHaveLength(3);
-    expect(wrapper.find("EditIcon")).toHaveLength(1);
-    expect(wrapper.find("DeleteIcon")).toHaveLength(1);
-    expect(wrapper.find("PersonIcon")).toHaveLength(1);
-  });
-});
-
-describe("Navbar Component", () => {
+      }
+    ]
+  };
   beforeEach(() => {
     store.dispatch.mockClear();
   });
@@ -157,16 +185,20 @@ describe("Navbar Component", () => {
     test("Register Menu Toggle", () => {
       state = {
         toggles: {
-          userFormDialog: false
-        }
-      }
-      const openRegDialog = wrapper.find(Button).filterWhere(n => n.props().to === "/register")
-      expect(openRegDialog).toHaveLength(1)
-      const regDialogWrapper = shallow(<UserDialog store={store} match={{params:{}}}/>)
-      expect(regDialogWrapper.find(Dialog).props().open).toBe(false)
-      openRegDialog.prop("onClick")()
-      expect(store.dispatch).toHaveBeenCalled()
-    })
+          userFormDialog: false,
+        },
+      };
+      const openRegDialog = wrapper
+        .find(Button)
+        .filterWhere((n) => n.props().to === "/register");
+      expect(openRegDialog).toHaveLength(1);
+      const regDialogWrapper = shallow(
+        <UserDialog store={store} match={{ params: {} }} />
+      );
+      expect(regDialogWrapper.find(Dialog).props().open).toBe(false);
+      openRegDialog.prop("onClick")();
+      expect(store.dispatch).toHaveBeenCalled();
+    });
   });
 });
 
@@ -183,31 +215,31 @@ describe("UserForm Component", () => {
     expect(Object.keys(wrapper.state())).toHaveLength(9);
   });
   test("Contains the Correct Textfields - first_name, last_name, email, password, image", () => {
-    const textFields = wrapper.find(TextField).map(tf => tf.prop("name"))
-    expect(textFields).toHaveLength(6)
-    expect(textFields.includes('first_name')).toBeTruthy()
-    expect(textFields.includes('last_name')).toBeTruthy()
-    expect(textFields.includes('email')).toBeTruthy()
-    expect(textFields.includes('password')).toBeTruthy()
-    expect(textFields.includes('password2')).toBeTruthy()
-    expect(textFields.includes('image')).toBeTruthy()
-  })
+    const textFields = wrapper.find(TextField).map((tf) => tf.prop("name"));
+    expect(textFields).toHaveLength(6);
+    expect(textFields.includes("first_name")).toBeTruthy();
+    expect(textFields.includes("last_name")).toBeTruthy();
+    expect(textFields.includes("email")).toBeTruthy();
+    expect(textFields.includes("password")).toBeTruthy();
+    expect(textFields.includes("password2")).toBeTruthy();
+    expect(textFields.includes("image")).toBeTruthy();
+  });
 
   test("Contains the Correct Radio Permission Toggles - is_student, is_teacher", () => {
-    const radios = wrapper.find(Radio).map(radio => radio.prop('name'))
-    expect(radios).toHaveLength(2)
-    expect(radios.includes("is_student")).toBeTruthy()
-    expect(radios.includes("is_teacher")).toBeTruthy()
-  })
+    const radios = wrapper.find(Radio).map((radio) => radio.prop("name"));
+    expect(radios).toHaveLength(2);
+    expect(radios.includes("is_student")).toBeTruthy();
+    expect(radios.includes("is_teacher")).toBeTruthy();
+  });
 });
 
-describe("Login Component",() => {
-  const shallow = createShallow({ untilSelector: "LoginForm"})
-  const wrapper = shallow(<LoginForm store={store} />)
+describe("Login Component", () => {
+  const shallow = createShallow({ untilSelector: "LoginForm" });
+  const wrapper = shallow(<LoginForm store={store} />);
   test("Contains Two TextFields - Email Password", () => {
-    const textFields = wrapper.find(TextField).map(tf => tf.prop("name"))
-    const buttons = wrapper.find(Button).map(btn => btn.prop("type"))
-    expect(textFields).toHaveLength(2)
-    expect(buttons).toHaveLength(2)
-  })
-})
+    const textFields = wrapper.find(TextField).map((tf) => tf.prop("name"));
+    const buttons = wrapper.find(Button).map((btn) => btn.prop("type"));
+    expect(textFields).toHaveLength(2);
+    expect(buttons).toHaveLength(2);
+  });
+});

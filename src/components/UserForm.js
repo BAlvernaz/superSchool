@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { addStudent, editStudent } from "../reducers/actions";
+import { addStudent, editUser } from "../reducers/actions";
 import { toggleDialog } from "../reducers/toggleActions";
 
 const inputs = [
@@ -104,7 +104,7 @@ class UserForm extends React.Component {
       school,
     } = this.state;
     this.props.dialogToggle();
-    this.props.studentEdit(this.props.student.id, {first_name, last_name, image, email, school});
+    this.props.studentEdit({first_name, last_name, email, image, school});
   }
   render() {
     const { school, password, password2 } = this.state;
@@ -235,7 +235,7 @@ const stateToProps = ({ schools }, { student, history }) => {
 const dispatchToProps = (dispatch) => {
   return {
     newStudent: (data) => dispatch(addStudent(data)),
-    studentEdit: (id, data) => dispatch(editStudent(id, data)),
+    studentEdit: (data) => dispatch(editUser(data)),
     dialogToggle: () => dispatch(toggleDialog()),
   };
 };

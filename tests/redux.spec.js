@@ -1,20 +1,23 @@
 import { v4 as uuidv4 } from "uuid";
 import {
   ADD_STUDENT,
-  EDIT_STUDENT,
+  EDIT_USER,
   GET_STUDENTS,
   REMOVE_STUDENT,
   GET_SCHOOLS,
-  LOGIN
+  LOGIN,
 } from "../src/reducers/actions";
 import { studentReducer } from "../src/reducers/studentReducer";
 import { schoolReducer } from "../src/reducers/schoolReducer";
-import { togglerReducer } from "../src/reducers/togglerReducer"
-import {  SIDEMENU_TOGGLE, USER_FORM_DIALOG_TOGGLE, LOGIN_FORM_DIALOG_TOGGLE } from "../src/reducers/toggleActions";
-import { userReducer } from '../src/reducers/userReducer'
+import { togglerReducer } from "../src/reducers/togglerReducer";
+import {
+  SIDEMENU_TOGGLE,
+  USER_FORM_DIALOG_TOGGLE,
+  LOGIN_FORM_DIALOG_TOGGLE,
+} from "../src/reducers/toggleActions";
+import { userReducer } from "../src/reducers/userReducer";
 
-
-// Simple Reducers Action Checks 
+// Simple Reducers Action Checks
 describe("Students Reducer", () => {
   const student1UUID = uuidv4();
   const school1UUID = uuidv4();
@@ -103,69 +106,71 @@ describe("Students Reducer", () => {
         [
           {
             id: student1UUID,
-            name: "Test Student 1",
+            profile: { id: 1, first_name: "Test", last_name: "Student 1" },
             school: school1UUID,
           },
           {
             id: student2UUID,
-            name: "Test Student 2",
+            profile: { id: 2, name: "Test Student 2" },
             school: school1UUID,
           },
         ],
         {
-          type: EDIT_STUDENT,
-          student: {
-            id: student1UUID,
-            name: " Editted: Student 1",
-            school: school1UUID,
+          type: EDIT_USER,
+          user: {
+            id: 1,
+            first_name: "Blake",
+            last_name: "Alvernaz",
           },
         }
       )
-    ).toEqual(
-        [{
-      id: student1UUID,
-      name: " Editted: Student 1",
-      school: school1UUID,
-    },
-    {
-      id: student2UUID,
-      name: "Test Student 2",
-      school: school1UUID,
-    }
-  ])
-  })
+    ).toEqual([
+      {
+        id: student1UUID,
+        profile: { id: 1, first_name: "Blake", last_name: "Alvernaz" },
+        school: school1UUID,
+      },
+      {
+        id: student2UUID,
+        profile: { id: 2, name: "Test Student 2" },
+        school: school1UUID,
+      },
+    ]);
+  });
 });
 
 describe("School Reducer", () => {
-    test("Initial State", () => {
-        expect(schoolReducer([], {type: GET_SCHOOLS, schools: []})).toEqual([])
-    })
-})
+  test("Initial State", () => {
+    expect(schoolReducer([], { type: GET_SCHOOLS, schools: [] })).toEqual([]);
+  });
+});
 
 describe("Toggle Reducer", () => {
   const fakeToggles = {
     sideMenu: false,
-    userFormDialog: false,  
-    loginFormDialog: false}
-    test('Toggle SideMenu', () => {
-        expect(togglerReducer(fakeToggles,
-                              {type: SIDEMENU_TOGGLE}))
-        .toEqual({
-            ...fakeToggles,
-            sideMenu: true
-        })
-    })
-    test("Toggle User Form Dialog", () => {
-      expect(togglerReducer(fakeToggles, {type: USER_FORM_DIALOG_TOGGLE})).toEqual({...fakeToggles, userFormDialog: true})
-    })
-    test("Toggle User Login Form Dialog", () => {
-      expect(togglerReducer(fakeToggles, {type: LOGIN_FORM_DIALOG_TOGGLE})).toEqual({...fakeToggles, loginFormDialog: true})
-    })
-})
+    userFormDialog: false,
+    loginFormDialog: false,
+  };
+  test("Toggle SideMenu", () => {
+    expect(togglerReducer(fakeToggles, { type: SIDEMENU_TOGGLE })).toEqual({
+      ...fakeToggles,
+      sideMenu: true,
+    });
+  });
+  test("Toggle User Form Dialog", () => {
+    expect(
+      togglerReducer(fakeToggles, { type: USER_FORM_DIALOG_TOGGLE })
+    ).toEqual({ ...fakeToggles, userFormDialog: true });
+  });
+  test("Toggle User Login Form Dialog", () => {
+    expect(
+      togglerReducer(fakeToggles, { type: LOGIN_FORM_DIALOG_TOGGLE })
+    ).toEqual({ ...fakeToggles, loginFormDialog: true });
+  });
+});
 
 describe("User Reducer", () => {
-   test("Initilal state", () => {
-     expect(userReducer({}, {type: LOGIN})).toEqual({})
-   })
-})
-
+  test("Initilal state", () => {
+    expect(userReducer({}, { type: LOGIN })).toEqual({});
+  });
+});

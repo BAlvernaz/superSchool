@@ -1,4 +1,4 @@
-import { GET_STUDENTS, ADD_STUDENT, REMOVE_STUDENT, EDIT_STUDENT } from './actions'
+import { GET_STUDENTS, ADD_STUDENT, REMOVE_STUDENT, EDIT_USER } from './actions'
 
 export const studentReducer = (state = [], action) => {
   switch (action.type) {
@@ -11,14 +11,15 @@ export const studentReducer = (state = [], action) => {
     case REMOVE_STUDENT:
       state = state.filter((student) => student.id !== action.studentId);
       break;
-    case EDIT_STUDENT:
+    case EDIT_USER:
       state = [...state].map(student => {
-        if (student.id !== action.student.id) {
+        if (student.profile.id !== action.user.id) {
           return student
         }
-          return action.student
-      })
-      break;
-  }
+          return {...student, profile: {...student.profile, ...action.user}}
+    
+  })
+  break;
+}
   return state;
 };

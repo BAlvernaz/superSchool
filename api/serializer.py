@@ -1,15 +1,22 @@
 from rest_framework import serializers
 from api.models import Student, School
+from dj_rest_auth.serializers import UserDetailsSerializer
 from django.contrib.auth import get_user_model
+
 
 User = get_user_model()
 
 #Student Profile - Using User
+# class Custom_User_Details_Serializer(UserDetailsSerializer):
+#   class Meta(UserDetailsSerializer.Meta):
+#     fields = UserDetailsSerializer.Meta.fields 
+  
+
 class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
     fields = ["id", "first_name", "last_name", "image", "email"]
-    
+
 class StudentSerializer(serializers.ModelSerializer):
     profile = UserProfileSerializer()
     class Meta:
@@ -20,6 +27,8 @@ class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
       model = School
       fields = ['id', 'name', 'image' ]
+
+
 
 
 class UserSerializer(serializers.ModelSerializer):

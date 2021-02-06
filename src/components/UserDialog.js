@@ -10,7 +10,7 @@ const UserDialog = ({ student, dialogToggle, toggle, history }) => {
         <Dialog open={toggle} onClose={() => {
             dialogToggle()
             history.push('/students')}} >
-        <DialogTitle>{student ? `Edit Student:${" " + student.name}` : "New Person"}</DialogTitle>
+        <DialogTitle>{student ? `Edit Student:${" " + student.profile.first_name + " " + student.profile.last_name}` : "New Person"}</DialogTitle>
             <DialogContent>
                 <UserForm student={student} history={history} />
         </DialogContent>

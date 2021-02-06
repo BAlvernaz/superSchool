@@ -1,4 +1,4 @@
-import { LOGIN, USER_CHECK, LOGOUT } from "./actions"
+import { LOGIN, LOGOUT, EDIT_USER, USER_CHECK} from "./actions"
 
  
 export const userReducer = (state = {}, action) => {
@@ -9,6 +9,9 @@ export const userReducer = (state = {}, action) => {
             break;
         case LOGOUT:
             state = {}
+            break;
+        case EDIT_USER:
+            state = {...state, ...action.user }
             break;
     }
     return state

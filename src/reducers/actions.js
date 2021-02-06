@@ -6,7 +6,7 @@ axios.defaults.withCredentials = true;
 // Student Actions 
 const GET_STUDENTS = "GET_STUDENTS";
 const REMOVE_STUDENT = "REMOVE_STUDENT";
-const EDIT_STUDENT = "EDIT_STUDENT";
+const EDIT_USER = "EDIT_USER";
 const ADD_STUDENT = "ADD_STUDENT";
 
 
@@ -25,10 +25,7 @@ const _getStudents = (students) => ({
     studentId,
   });
   
-  const _editStudent = (student) => ({
-    type: EDIT_STUDENT,
-    student
-  })
+
 
   export const getStudents = () => {
     return async (dispatch) => {
@@ -69,18 +66,6 @@ const _getStudents = (students) => ({
     };
   };
 
-  export const editStudent = (studentId, student) => {
-
-    return async dispatch => {
-      try {
-        const response = await axios.put(`http://localhost:8000/api/auth/user/`, {first_name, last_name, email, image, })
-        dispatch(_editStudent(response.data))
-      } catch (err) {
-        // TODO: Change to a Error Reducer
-        console.error(err)
-      }
-    }
-  }
 
 //School Actions
 
@@ -159,10 +144,29 @@ export const userCheck = () => {
   }
 }
 
+  const _editUser = (user) => ({
+    type: EDIT_USER,
+    user,
+  })
+  // Updates User Account and Students Profile (User and Students Reducers)
+  export const editUser = ({first_name, last_name, email, image}) => {
+    return async dispatch => {
+      const profile = {first_name, last_name, email, image, school}
+      try {
+        const response  = await axios.put(`http://localhost:8000/api/auth/user/`, profile)
+        dispatch(_editUser(response.data))
+      } catch (err) {
+        // TODO: Change to a Error Reducer
+        console.error(err)
+      }
+    }
+  }
+
+
 export {
     GET_SCHOOLS,
     GET_STUDENTS,
-    EDIT_STUDENT,
+    EDIT_USER,
     REMOVE_STUDENT,
     ADD_STUDENT,
     LOGIN,

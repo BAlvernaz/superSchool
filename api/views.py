@@ -1,5 +1,5 @@
 from api.models import Student, School
-from api.serializer import StudentSerializer, SchoolSerializer, UserSerializer
+from api.serializer import StudentSerializer, SchoolSerializer, UserSerializer, UserProfileSerializer
 from rest_framework import generics, permissions
 from django.contrib.auth import get_user_model
 
