@@ -101,10 +101,9 @@ class UserForm extends React.Component {
       last_name,
       image,
       email,
-      school,
     } = this.state;
     this.props.dialogToggle();
-    this.props.studentEdit({first_name, last_name, email, image, school});
+    this.props.studentEdit({first_name, last_name, email, image});
   }
   render() {
     const { school, password, password2 } = this.state;
@@ -183,7 +182,7 @@ class UserForm extends React.Component {
                             return char.toUpperCase();
                           }
                           return char;
-                        })}
+                        }).join("")}
                     </label>
                     <Radio
                       name={radio}

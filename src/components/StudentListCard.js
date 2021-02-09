@@ -4,20 +4,13 @@ import {
   Card,
   Typography,
   CardContent,
-  IconButton,
   CardMedia,
   CardActionArea
 } from "@material-ui/core";
-import { removeStudent } from "../reducers/actions";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-
-import PersonIcon from "@material-ui/icons/Person";
 
 const StudentListCard = ({
   student,
   schools,
-  deleteStudent,
 
 }) => {
   return (
@@ -48,10 +41,5 @@ const stateToProps = ({ schools }, { student }) => {
   };
 };
 
-const dispatchToProps = (dispatch) => {
-  return {
-    deleteStudent: (studentId) => dispatch(removeStudent(studentId)),
-  };
-};
 
-export default connect(stateToProps, dispatchToProps)(StudentListCard);
+export default connect(stateToProps)(StudentListCard);

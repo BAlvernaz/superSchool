@@ -16,8 +16,8 @@ const Routes = () => {
         <Route path="/students" component={StudentList} />
         <Route exact path="/schools" component={SchoolList} />
         <Route path="/students/edit/:id" component={UserDialog} />
-        <Route path="/register" component={UserDialog}/> 
-        <Route path="/login" component={LoginDialog} />
+        <Route component={UserDialog}/> 
+        <Route component={LoginDialog} />
       </div>
     </div>
   );

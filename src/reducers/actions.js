@@ -139,7 +139,7 @@ export const userCheck = () => {
       return dispatch(_userCheck(response.data))
     } catch (err) {
       console.error(err)
-      // TODO: Change to an Error Reducer
+      return dispatch(_logout())
     }
   }
 }
@@ -151,7 +151,7 @@ export const userCheck = () => {
   // Updates User Account and Students Profile (User and Students Reducers)
   export const editUser = ({first_name, last_name, email, image}) => {
     return async dispatch => {
-      const profile = {first_name, last_name, email, image, school}
+      const profile = {first_name, last_name, email, image}
       try {
         const response  = await axios.put(`http://localhost:8000/api/auth/user/`, profile)
         dispatch(_editUser(response.data))

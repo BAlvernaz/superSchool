@@ -71,8 +71,6 @@ describe("App and Route Component", () => {
     expect(pathMap["/students"]).toBe(StudentList);
     expect(pathMap["/schools"]).toBe(SchoolList);
     expect(pathMap["/students/edit/:id"]).toBe(UserDialog);
-    expect(pathMap["/register"]).toBe(UserDialog);
-    expect(pathMap["/login"]).toBe(LoginDialog);
   });
 });
 
@@ -190,7 +188,7 @@ describe("Navbar Component", () => {
       };
       const openRegDialog = wrapper
         .find(Button)
-        .filterWhere((n) => n.props().to === "/register");
+        .filterWhere(n => n.text() === "Register")
       expect(openRegDialog).toHaveLength(1);
       const regDialogWrapper = shallow(
         <UserDialog store={store} match={{ params: {} }} />

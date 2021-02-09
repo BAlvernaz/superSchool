@@ -53,16 +53,12 @@ const Navbar = ({
             <ButtonGroup>
               <Button
                 variant="contained"
-                component={RouterLink}
-                to={"/register"}
                 onClick={() => dialogToggle()}
               >
                 Register
               </Button>
               <Button
                 variant="contained"
-                component={RouterLink}
-                to={"/login"}
                 onClick={() => loginToggle()}
               >
                 Login
