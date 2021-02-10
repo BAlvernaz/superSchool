@@ -1,11 +1,4 @@
-import {
-  TextField,
-  Select,
-  MenuItem,
-  FormControl,
-  Button,
-  Radio,
-} from "@material-ui/core";
+import { TextField, Divider, Button, Radio } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { addStudent, editUser } from "../reducers/actions";
@@ -97,37 +90,38 @@ class UserForm extends React.Component {
 
   onSubmitEdit(ev) {
     ev.preventDefault();
-    const {
-      first_name,
-      last_name,
-      image,
-      email,
-    } = this.state;
+    const { first_name, last_name, image, email } = this.state;
     this.props.dialogToggle();
-    this.props.studentEdit({first_name, last_name, email, image});
+    this.props.studentEdit({ first_name, last_name, email, image });
   }
   render() {
     const { school, password, password2 } = this.state;
-    const { schools, student } = this.props;
+    const { student } = this.props;
     const { onSubmit, onChange, onSubmitEdit } = this;
     return (
-      <div>
+      <div style={{padding: 0}}>
         <form onSubmit={student ? onSubmitEdit : onSubmit}>
-          <FormControl
+          <div
             style={{
-              marginLeft: "10px",
-              minWidth: "240px",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                alignContent: "flex-start",
               }}
             >
               {!student
                 ? inputs.map((input, idx) => (
                     <TextField
+                      style={{
+                        flexBasis: "calc(50% - 10px)",
+                        marginRight: "10px",
+                      }}
                       key={idx}
                       label={input.replace("_", " ")}
                       value={this.state[input]}
@@ -146,6 +140,10 @@ class UserForm extends React.Component {
                     .filter((name) => !name.includes("password"))
                     .map((input, idx) => (
                       <TextField
+                        style={{
+                          flexBasis: "calc(50% - 10px)",
+                          marginRight: "10px",
+                        }}
                         key={idx}
                         label={input.replace("_", " ")}
                         value={this.state[input]}
@@ -154,63 +152,66 @@ class UserForm extends React.Component {
                         type={input === "email" ? "email" : "text"}
                       />
                     ))}
-              <SchoolSelect school={school} onChange={onChange} />
-              {!student ? radios.map((radio) => {
-                return (
-                  <div key={radio}>
-                    <label htmlFor={radio}>
-                      {radio
-                        .slice(3)
-                        .split("")
-                        .map((char, idx) => {
-                          if (idx === 0) {
-                            return char.toUpperCase();
-                          }
-                          return char;
-                        }).join("")}
-                    </label>
-                    <Radio
-                      name={radio}
-                      onChange={onChange}
-                      value={this.state[radio]}
-                      checked={this.state[radio] === true}
-                    />
-                  </div>
-                );
-              }): ""}
             </div>
-            {!student ? (
-              <Button
-                type="submit"
-                color="primary"
-                disableElevation
-                variant="contained"
-                disabled={
-                  password !== password2 ? true : !password ? true : false
-                }
-              >
-                Submit
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                color="primary"
-                disableElevation
-                variant="contained"
-              >
-                Submit
-              </Button>
-            )}
-          </FormControl>
+            <Divider style={{ height: "5px" }} />
+            <SchoolSelect school={school} onChange={onChange} />
+            {!student
+              ? radios.map((radio) => {
+                  return (
+                    <div key={radio}>
+                      <label htmlFor={radio}>
+                        {radio
+                          .slice(3)
+                          .split("")
+                          .map((char, idx) => {
+                            if (idx === 0) {
+                              return char.toUpperCase();
+                            }
+                            return char;
+                          })
+                          .join("")}
+                      </label>
+                      <Radio
+                        name={radio}
+                        onChange={onChange}
+                        value={this.state[radio]}
+                        checked={this.state[radio] === true}
+                      />
+                    </div>
+                  );
+                })
+              : ""}
+          </div>
+          {!student ? (
+            <Button
+              type="submit"
+              color="primary"
+              disableElevation
+              variant="contained"
+              disabled={
+                password !== password2 ? true : !password ? true : false
+              }
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              color="primary"
+              disableElevation
+              variant="contained"
+            >
+              Submit
+            </Button>
+          )}
         </form>
       </div>
     );
   }
 }
 
-const stateToProps = ({ schools }, { student, history }) => {
+const stateToProps = ({}, { student, history }) => {
   return {
-    schools,
     student,
     history,
   };

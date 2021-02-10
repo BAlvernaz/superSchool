@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle } from '@material-ui/core'
+import { Dialog, DialogContent, DialogTitle, Divider, Typography } from '@material-ui/core'
 import React from 'react'
 import { connect } from 'react-redux'
 import { toggleDialog } from '../reducers/toggleActions'
@@ -9,11 +9,14 @@ const UserDialog = ({ student, dialogToggle, toggle, history }) => {
         <div>
         <Dialog open={toggle} onClose={() => {
             dialogToggle()
-            history.push('/students')}} >
-        <DialogTitle>{student ? `Edit Profile:${" " + student.profile.first_name + " " + student.profile.last_name}` : "Welcome To Super Schools"}</DialogTitle>
+            history.push('/students')}}
+            >
+        <DialogTitle style={{textAlign: "center"}} >{student ? `Edit Profile:${" " + student.profile.first_name + " " + student.profile.last_name}` : "Welcome To Super Schools"}</DialogTitle>
+        <Divider style={{height: "5px"}}/>
+        <DialogTitle disableTypography style={{textAlign: "center", marginTop: "1px", padding: 0}}><h3 style={{margin: 0}}>Profile Information</h3></DialogTitle>
             <DialogContent>
                 <UserForm student={student} history={history} />
-        </DialogContent>
+            </DialogContent>
         </Dialog>
         </div>
     )
