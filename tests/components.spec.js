@@ -31,6 +31,7 @@ import UserForm from "../src/components/UserForm";
 import UserDialog from "../src/components/UserDialog";
 import LoginForm from "../src/components/LoginForm";
 import LoginDialog from "../src/components/LoginDialog";
+import SchoolSelect from "../src/components/SchoolSelect";
 
 let state = {
   toggles: {
@@ -208,7 +209,7 @@ describe("UserForm Component", () => {
   const shallow = createShallow({ untilSelector: "UserForm" });
   const wrapper = shallow(<UserForm store={store} />);
   test("One Select, One Button, Six State Properties", () => {
-    expect(wrapper.find(Select)).toHaveLength(1);
+    expect(wrapper.find(SchoolSelect)).toHaveLength(1);
     expect(wrapper.find(Button)).toHaveLength(1);
     expect(Object.keys(wrapper.state())).toHaveLength(9);
   });
