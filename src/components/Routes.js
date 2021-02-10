@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Navbar from "./Navbar";
 import SchoolList from "./SchoolList";
 import SideMenu from "./SideMenu";
@@ -15,10 +15,12 @@ const Routes = () => {
         <Route component={Navbar} />
         <Route path="/students" component={StudentList} />
         <Route exact path="/schools" component={SchoolList} />
-        <Route path="/students/edit/:id" component={UserDialog} />
-        <Route component={UserDialog}/> 
         <Route component={LoginDialog} />
       </div>
+      <Switch>
+        <Route path="/students/edit/:id" component={UserDialog} />
+        <Route component={UserDialog} />
+      </Switch>
     </div>
   );
 };

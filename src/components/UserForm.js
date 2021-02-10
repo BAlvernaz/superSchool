@@ -10,6 +10,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { addStudent, editUser } from "../reducers/actions";
 import { toggleDialog } from "../reducers/toggleActions";
+import SchoolSelect from "./SchoolSelect";
 
 const inputs = [
   "first_name",
@@ -153,23 +154,7 @@ class UserForm extends React.Component {
                         type={input === "email" ? "email" : "text"}
                       />
                     ))}
-              <Select
-                name="school"
-                value={school}
-                onChange={onChange}
-                autoWidth
-                label="School That You Attend"
-              >
-                {schools.length > 0 ? (
-                  schools.map((school) => (
-                    <MenuItem key={school.id} value={school.id}>
-                      {school.name}
-                    </MenuItem>
-                  ))
-                ) : (
-                  <MenuItem value={null}>No Schools to Choose From</MenuItem>
-                )}
-              </Select>
+              <SchoolSelect school={school} onChange={onChange} />
               {!student ? radios.map((radio) => {
                 return (
                   <div key={radio}>
