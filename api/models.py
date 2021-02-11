@@ -40,5 +40,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Student(models.Model):
     id =  models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     gpa = models.DecimalField(max_digits=3, decimal_places=2, default=0.00)
-    profile = models.OneToOneField(User, related_name="profile", on_delete=models.PROTECT)
-    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    profile = models.OneToOneField(User, related_name="profile", on_delete=models.SET_NULL, null=True)
+    school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True)

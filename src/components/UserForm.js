@@ -1,4 +1,11 @@
-import { TextField, Divider, Button, Radio } from "@material-ui/core";
+import {
+  TextField,
+  Divider,
+  Button,
+  Radio,
+  ButtonGroup,
+  DialogTitle,
+} from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { addStudent, editUser } from "../reducers/actions";
@@ -99,7 +106,7 @@ class UserForm extends React.Component {
     const { student } = this.props;
     const { onSubmit, onChange, onSubmitEdit } = this;
     return (
-      <div style={{padding: 0}}>
+      <div style={{ padding: 0 }}>
         <form onSubmit={student ? onSubmitEdit : onSubmit}>
           <div
             style={{
@@ -153,10 +160,28 @@ class UserForm extends React.Component {
                       />
                     ))}
             </div>
-            <Divider style={{ height: "5px" }} />
-            <SchoolSelect school={school} onChange={onChange} />
-            {!student
-              ? radios.map((radio) => {
+            {!student ? (
+              <div style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}>
+                <Divider
+                  style={{
+                    height: "5px",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    
+                  }}
+                />
+                <DialogTitle
+                  disableTypography
+                  style={{ textAlign: "center", marginTop: "1px", padding: 0 }}
+                >
+                  <h3 style={{ margin: 0 }}>Account Type: </h3>
+                </DialogTitle>
+
+                {radios.map((radio) => {
                   return (
                     <div key={radio}>
                       <label htmlFor={radio}>
@@ -179,8 +204,34 @@ class UserForm extends React.Component {
                       />
                     </div>
                   );
-                })
-              : ""}
+                })}
+                  <Divider
+                    style={{
+                      height: "5px",
+                      marginTop: "10px",
+                      marginBottom: "10px",
+
+                    }}
+                  />
+                  <DialogTitle
+                    disableTypography
+                    style={{
+                      textAlign: "center",
+                      marginTop: "1px",
+                      padding: 0,
+                    }}
+                  >
+                    <h3 style={{ margin: 0 }}>Select Your School </h3>
+                  </DialogTitle>
+                  <SchoolSelect
+                    school={school}
+                    onChange={onChange}
+                    student={student}
+                  />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           {!student ? (
             <Button
@@ -195,14 +246,19 @@ class UserForm extends React.Component {
               Submit
             </Button>
           ) : (
-            <Button
-              type="submit"
-              color="primary"
-              disableElevation
-              variant="contained"
-            >
-              Submit
-            </Button>
+            <ButtonGroup>
+              <Button
+                type="submit"
+                color="primary"
+                disableElevation
+                variant="contained"
+              >
+                Edit Profile Data
+              </Button>
+              <Button style={{ backgroundColor: "red" }}>
+                Delete Student
+              </Button>
+            </ButtonGroup>
           )}
         </form>
       </div>

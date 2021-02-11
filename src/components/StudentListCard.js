@@ -26,8 +26,8 @@ const StudentListCard = ({
             {"Name: " + student.profile.first_name + " " + student.profile.last_name}
           </Typography>
           <Typography>
-            {"Attending: " +
-              schools.find((school) => school.id === student.school).name}
+            {student.school ? "Attending: " +
+              schools.find((school) => school.id === student.school).name : "Not Currently Attending A School"}
           </Typography>
         </CardContent>
       </CardActionArea>
