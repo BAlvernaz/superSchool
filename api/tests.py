@@ -1,11 +1,8 @@
-from django.db import reset_queries
-from django.http import response
 from django.test import TestCase, client
 from rest_framework.test import APIRequestFactory
 from .models import School, Student
-from .views import SchoolList, UserCreation
+from .views import SchoolList
 from django.contrib.auth import get_user_model
-from dj_rest_auth.views import LoginView
 from rest_framework.test import APIClient
 
 User = get_user_model()
@@ -16,7 +13,7 @@ class UserandAuthenicationTest(TestCase):
     def setUp(self):
         self.school1 = School.objects.create(name="Test School 1")
     def test_create_user(self):
-      testStudentUser = User.objects.create_user( "Test@test.com", "password", self.school1.id, first_name="Test", last_name="Testy", is_student=True, image="No Image")
+      testStudentUser = User.objects.create_user("Test@test.com", "password", self.school1.id, first_name="Test", last_name="Testy", is_student=True, image="No Image", is_teacher=False)
       self.assertEqual(testStudentUser.get_full_name(), "Test Testy")
       self.assertTrue(testStudentUser.is_student)
       self.assertEqual(len(Student.objects.all()), 1)
@@ -31,7 +28,7 @@ class StudentsSchoolsApiTest(TestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
         self.school1 = School.objects.create(name="Test School 1", image='no')
-        School.objects.create(name="Test School 2")
+        self.school2 = School.objects.create(name="Test School 2")
         User.objects.create_user("testy@testy.com", "password", self.school1.id)
     def test_get_schools(self):
         request = self.factory.get('/api/schools/')
@@ -46,18 +43,20 @@ class StudentsSchoolsApiTest(TestCase):
     def test_register_api(self):
         response = client.post('/api/auth/reg/', 
         { "email":"test@test.com", 
-          "password":"10wer1232",
+          "password1":"10wer1232",
+          "password2":"10wer1232",
           "first_name": "Blake",
           "last_name": "Alvernaz", 
           "image": "No Image",
-          "is_student": True,
+          "is_student": False,
           "school": self.school1.id},
           format="json")
         self.assertEqual(response.status_code, 201)
         self.assertEqual(len(User.objects.all()), 2)
-        self.assertEqual(len(Student.objects.all()), 1)
+        print(Student.objects.all())
+        self.assertEqual(len(Student.objects.all()), 2)
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.data['email'], "test@test.com")
+        self.assertTrue(response.data['key'])
     def test_login_api(self):
         response = client.post('/api/auth/login/', {"email":"testy@testy.com", "password":"password"})
         self.assertEqual(response.status_code, 200)
@@ -79,5 +78,29 @@ class StudentsSchoolsApiTest(TestCase):
         user = client.get('/api/auth/user/')
         self.assertEqual(user.data["email"], "testyy@testyy.com")
         self.assertEqual(user.data["first_name"], "New")
-    
+    def test_change_school(self):
+        createResponse = client.post('/api/auth/reg/', 
+        { "email":"test@test.com", 
+          "password1":"10wer1232",
+          "password2":"10wer1232",
+          "first_name": "Blake",
+          "last_name": "Alvernaz", 
+          "image": "No Image",
+          "is_student": True,
+          "is_teacher": False,
+          "school": self.school1.id},
+          format="json")
+        self.assertEqual(createResponse.status_code, 201)
+        self.assertTrue(createResponse.data['key'])
 
+        profile = createResponse.data['id']
+        me = Student.objects.get(profile_id=profile)
+        my_id = me.id
+        editRes = client.put('/api/students/{}/'.format(my_id), {"gpa":1.0, "profile":{ "email":"test@test.com", 
+          "first_name": "Blake",
+          "last_name": "Alvernaz", 
+          "image": "No Image"},
+          "school": self.school2.id}, format="json")
+        print(editRes.data)
+        self.assertEqual(editRes.status_code,200)
+        

@@ -17,7 +17,7 @@ const inputs = [
   "last_name",
   "email",
   "image",
-  "password",
+  "password1",
   "password2",
 ];
 const radios = ["is_student", "is_teacher"];
@@ -30,7 +30,7 @@ class UserForm extends React.Component {
       last_name: "",
       email: "",
       image: "",
-      password: "",
+      password1: "",
       password2: "",
       school: "",
       is_student: true,
@@ -71,7 +71,7 @@ class UserForm extends React.Component {
     const {
       first_name,
       last_name,
-      password,
+      password1,
       image,
       email,
       is_student,
@@ -83,14 +83,14 @@ class UserForm extends React.Component {
     this.props.dialogToggle();
     this.props.newStudent({
       email,
-      password,
+      password1,
       first_name,
       last_name,
       image,
       is_student,
       is_teacher,
       school,
-      password: password2,
+      password2,
     });
     this.props.history.push("/students");
   }
@@ -102,7 +102,7 @@ class UserForm extends React.Component {
     this.props.studentEdit({ first_name, last_name, email, image });
   }
   render() {
-    const { school, password, password2 } = this.state;
+    const { school, password1, password2 } = this.state;
     const { student } = this.props;
     const { onSubmit, onChange, onSubmitEdit } = this;
     return (
@@ -240,7 +240,7 @@ class UserForm extends React.Component {
               disableElevation
               variant="contained"
               disabled={
-                password !== password2 ? true : !password ? true : false
+                password1 !== password2 ? true : !password1 ? true : false
               }
             >
               Submit

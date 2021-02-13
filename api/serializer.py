@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from api.models import Student, School
 from dj_rest_auth.serializers import UserDetailsSerializer
+from dj_rest_auth.registration.serializers import RegisterSerializer 
 from django.contrib.auth import get_user_model
-
+from django.db import transaction
 
 User = get_user_model()
 
@@ -22,6 +23,19 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
       model = Student
       fields = ["gpa", "profile", "id", 'school']
+      read_only_fields = ("profile",)
+    
+      # def update(self, instance, validated_data):
+      #   print(" I need to get here")
+      #   profile_serializer = self.fields['profile']
+      #   profile_instance = instance.profile
+      #   profile_data = validated_data.pop('profile', {})
+      #   print("Got Here")
+
+      #   profile_serializer.update(profile_instance, profile_data)
+        
+      #   return super().update(instance, validated_data)
+    
 
 class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,65 +45,47 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 
 
-class UserSerializer(serializers.ModelSerializer):
-  password = serializers.CharField(write_only=True)
-  school = serializers.CharField()
-  is_student = serializers.BooleanField(default=True)
-  is_teacher = serializers.BooleanField(default=False)
-  def create(self, validated_data):
-    user = User.objects.create_user(
-      validated_data['email'],
-      validated_data['password'],
-      validated_data['school'],
-      first_name=validated_data['first_name'],
-      last_name=validated_data['last_name'],
-      image = validated_data['image'],
-      is_student = validated_data['is_student'],
-      is_teacher = validated_data['is_teacher'],
-    )
-    return user
+# # class UserSerializer(serializers.ModelSerializer):
+# #   password = serializers.CharField(write_only=True)
+# #   school = serializers.CharField()
+# #   is_student = serializers.BooleanField(default=True)
+# #   is_teacher = serializers.BooleanField(default=False)
+
+# #   # def create(self, validated_data):
+# #   #   user = User.objects.create_user(
+# #   #     validated_data['email'],
+# #   #     validated_data['password'],
+# #   #     validated_data['school'],
+# #   #     first_name=validated_data['first_name'],
+# #   #     last_name=validated_data['last_name'],
+# #   #     image = validated_data['image'],
+# #   #     is_student = validated_data['is_student'],
+# #   #     is_teacher = validated_data['is_teacher'],
+# #   #   )
+# #   #   return user
+  
 
 
-  class Meta:
-    model = User
-    fields = ['first_name', 'last_name', 'email', 'password', 'image', 'school', 'is_student', 'is_teacher']
+#   class Meta:
+#     model = User
+#     fields = ['first_name', 'last_name', 'email', 'password', 'image', 'school', 'is_student', 'is_teacher', 'id']
 
 
       #Customizing DJ-REST-AUTH - Not Quite Working as Expected
 
-# class CustomRegisterSerializer(RegisterSerializer):
-#    first_name = serializers.CharField(required=True, write_only=True)
-#    last_name = serializers.CharField(required=True, write_only=True)
-#    password1 = serializers.CharField(required=True, write_only=True)
-#    password2 = serializers.CharField(required=True, write_only=True)
-#    is_student = serializers.BooleanField(default=True, write_only=True)
-#    is_teacher = serializers.BooleanField(default=False, write_only=True)
-#    school = SchoolSerializer(many=False, required=False)
+class CustomRegisterSerializer(RegisterSerializer):
+   is_student = serializers.BooleanField(default=True, write_only=True)
+   is_teacher = serializers.BooleanField(default=False, write_only=True)
+   school = serializers.CharField()
 
-
-#    class Meta:
-#         model = User
-#         fields = ['email', 'first_name','last_name',
-#         'password', 'password2', 'is_student', 'is-teacher', 'school']
-#         extra_kwargs = {
-#             'password': {
-#                 'write_only':True
-#             }
-#         }
-#    def save(self, request):
-#       print(self)
-#       password1 = self.validated_data['password1']
-#       password2 = self.validated_data['password2']
-#       if password1 != password2:
-#             raise serializers.ValidationError({'password':'Passwords must match.'})
-#       user = User.objects.create_user(self.validated_data['email'],
-#                  self.validated_data['password2'],
-#                  self.validated_data["school"],   
-#                  first_name=self.validated_data['first_name'],
-#                  last_name=self.validated_data['last_name'],
-#                  is_teacher=self.validated_data['is_teacher'],
-#                  is_student=self.validated_data['is_student'],
-#                  school=self.validated_data['school'])
-#       return user
+   @transaction.atomic
+   def save(self, request):
+       user = super().save(request)
+       user.is_student = self.validated_data.get('is_student', True)
+       user.is_teacher = self.validated_data.get('is_teacher', False)
+       user.school = self.validated_data.get('school', '')
+       user.save()
+       print(user)
+       return user
 
 

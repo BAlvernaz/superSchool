@@ -219,7 +219,7 @@ describe("UserForm Component", () => {
     expect(textFields.includes("first_name")).toBeTruthy();
     expect(textFields.includes("last_name")).toBeTruthy();
     expect(textFields.includes("email")).toBeTruthy();
-    expect(textFields.includes("password")).toBeTruthy();
+    expect(textFields.includes("password1")).toBeTruthy();
     expect(textFields.includes("password2")).toBeTruthy();
     expect(textFields.includes("image")).toBeTruthy();
   });
