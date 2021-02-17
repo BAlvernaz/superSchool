@@ -25,16 +25,16 @@ class StudentSerializer(serializers.ModelSerializer):
       fields = ["gpa", "profile", "id", 'school']
       read_only_fields = ("profile",)
     
-      # def update(self, instance, validated_data):
-      #   print(" I need to get here")
-      #   profile_serializer = self.fields['profile']
-      #   profile_instance = instance.profile
-      #   profile_data = validated_data.pop('profile', {})
-      #   print("Got Here")
+      def update(self, instance, validated_data):
+        print(" I need to get here")
+        profile_serializer = self.fields['profile']
+        profile_instance = instance.profile
+        profile_data = validated_data.pop('profile', {})
+        print("Got Here")
 
-      #   profile_serializer.update(profile_instance, profile_data)
+        profile_serializer.update(profile_instance, profile_data)
         
-      #   return super().update(instance, validated_data)
+        return super().update(instance, validated_data)
     
 
 class SchoolSerializer(serializers.ModelSerializer):
@@ -77,15 +77,23 @@ class CustomRegisterSerializer(RegisterSerializer):
    is_student = serializers.BooleanField(default=True, write_only=True)
    is_teacher = serializers.BooleanField(default=False, write_only=True)
    school = serializers.CharField()
+   
+   def create(self, validated_data):
+      user = User.objects.create_user(
+      validated_data['email'],
+      validated_data['password'],
+      validated_data['school'],
+      first_name=validated_data['first_name'],
+      last_name=validated_data['last_name'],
+      image = validated_data['image'],
+      is_student = validated_data['is_student'],
+      is_teacher = validated_data['is_teacher'],
+    )
+      return user
 
    @transaction.atomic
    def save(self, request):
-       user = super().save(request)
-       user.is_student = self.validated_data.get('is_student', True)
-       user.is_teacher = self.validated_data.get('is_teacher', False)
-       user.school = self.validated_data.get('school', '')
-       user.save()
-       print(user)
+       user = User.objects.create_user(self.validated_data.get('email', ""), self.validated_data.get('password', ""), self.validated_data.get('school', ""), is_student=self.validated_data.get('is_student', True), is_teacher=self.validated_data.get('is_teacher', False))
        return user
 
 

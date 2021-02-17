@@ -8,7 +8,6 @@ User = get_user_model()
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created and instance.is_student:
-        print(instance.school)
         school = School.objects.get(pk=instance.school)
         Student.objects.create(profile=instance, school=school)
 

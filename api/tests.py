@@ -48,12 +48,11 @@ class StudentsSchoolsApiTest(TestCase):
           "first_name": "Blake",
           "last_name": "Alvernaz", 
           "image": "No Image",
-          "is_student": False,
+          "is_student": True,
           "school": self.school1.id},
           format="json")
         self.assertEqual(response.status_code, 201)
         self.assertEqual(len(User.objects.all()), 2)
-        print(Student.objects.all())
         self.assertEqual(len(Student.objects.all()), 2)
         self.assertEqual(response.status_code, 201)
         self.assertTrue(response.data['key'])
@@ -92,11 +91,9 @@ class StudentsSchoolsApiTest(TestCase):
           format="json")
         self.assertEqual(createResponse.status_code, 201)
         self.assertTrue(createResponse.data['key'])
-
-        profile = createResponse.data['id']
-        me = Student.objects.get(profile_id=profile)
-        my_id = me.id
-        editRes = client.put('/api/students/{}/'.format(my_id), {"gpa":1.0, "profile":{ "email":"test@test.com", 
+        profile = client.get('/api/auth/user/')
+        id = Student.objects.get(profile_id=profile.data['id'])
+        editRes = client.put('/api/students/{}/'.format(id.id), {"gpa":1.0, "profile":{ "email":"test@test.com", 
           "first_name": "Blake",
           "last_name": "Alvernaz", 
           "image": "No Image"},
