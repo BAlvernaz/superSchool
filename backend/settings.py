@@ -155,14 +155,12 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    # allauth specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
-    # Needed to login by username in Django admin, regardless of allauth
     'django.contrib.auth.backends.ModelBackend',
 ]
 
 REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "api.serializer.UserProfileSerializer"
+    "USER_DETAILS_SERIALIZER": "api.serializer.UserDetailsSerializer"
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {

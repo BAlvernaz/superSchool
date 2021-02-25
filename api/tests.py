@@ -70,7 +70,7 @@ class StudentsSchoolsApiTest(TestCase):
         user = client.get('/api/auth/user/')
         self.assertEqual(user.status_code, 200)
         self.assertEqual(user.data['email'], "testy@testy.com")
-        response = client.put("/api/auth/user/", {"email": "testyy@testyy.com", "first_name": "New", "last_name": "Name"})
+        response = client.put("/api/auth/user/", {"email": "testyy@testyy.com", "first_name": "New", "last_name": "Name", "profile": {}}, format="json")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['email'], "testyy@testyy.com")
         self.assertEqual(response.data['first_name'], "New")
@@ -91,13 +91,12 @@ class StudentsSchoolsApiTest(TestCase):
           format="json")
         self.assertEqual(createResponse.status_code, 201)
         self.assertTrue(createResponse.data['key'])
-        profile = client.get('/api/auth/user/')
-        id = Student.objects.get(profile_id=profile.data['id'])
-        editRes = client.put('/api/students/{}/'.format(id.id), {"gpa":1.0, "profile":{ "email":"test@test.com", 
+        editRes = client.put('/api/auth/user/', {"email":"test@test.com", 
           "first_name": "Blake",
           "last_name": "Alvernaz", 
-          "image": "No Image"},
-          "school": self.school2.id}, format="json")
+          "image": "No Image",
+          "profile" : {"gpa":1.0, "school": self.school2.id}}, format="json")
         print(editRes.data)
         self.assertEqual(editRes.status_code,200)
+        self.assertEqual(editRes.data['profile']['school'], self.school2.id)
         
