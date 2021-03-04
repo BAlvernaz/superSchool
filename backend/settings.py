@@ -155,12 +155,12 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'allauth.account.auth_backends.AuthenticationBackend',
-    'django.contrib.auth.backends.ModelBackend',
+   "api.backends.AllowAllUsersModelBackend",
 ]
 
 REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "api.serializer.UserDetailsSerializer"
+    "USER_DETAILS_SERIALIZER": "api.serializer.UserDetailsSerializer",
+    'LOGIN_SERIALIZER': 'api.serializer.LoginSerializer'
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {

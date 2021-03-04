@@ -11,6 +11,6 @@ def create_user_profile(sender, instance, created, **kwargs):
         school = School.objects.get(pk=instance.school)
         Student.objects.create(profile=instance, school=school)
 
-@receiver(post_save, sender=Student)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+# @receiver(post_save, sender=Student)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()

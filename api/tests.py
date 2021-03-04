@@ -57,12 +57,22 @@ class StudentsSchoolsApiTest(TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertTrue(response.data['key'])
     def test_login_api(self):
-        response = client.post('/api/auth/login/', {"email":"testy@testy.com", "password":"password"})
+        client.post('/api/auth/reg/', 
+        { "email":"test@test.com", 
+          "password1":"10wer1232",
+          "password2":"10wer1232",
+          "first_name": "Blake",
+          "last_name": "Alvernaz", 
+          "image": "No Image",
+          "is_student": True,
+          "school": self.school1.id},
+          format="json")
+        response = client.post('/api/auth/login/', {"email":"test@test.com", "password":"10wer1232"})
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.data['key'])
         response2 = client.get('/api/auth/user/')
         self.assertEqual(response2.status_code, 200)
-        self.assertEqual(response2.data['email'], "testy@testy.com")
+        self.assertEqual(response2.data['email'], "test@test.com")
     def test_edit_user(self):
         login = client.post('/api/auth/login/', {"email":"testy@testy.com", "password":"password"})
         self.assertEqual(login.status_code, 200)
@@ -70,12 +80,12 @@ class StudentsSchoolsApiTest(TestCase):
         user = client.get('/api/auth/user/')
         self.assertEqual(user.status_code, 200)
         self.assertEqual(user.data['email'], "testy@testy.com")
-        response = client.put("/api/auth/user/", {"email": "testyy@testyy.com", "first_name": "New", "last_name": "Name", "profile": {}}, format="json")
+        response = client.put("/api/auth/user/", {"email": "testy@testy.com", "first_name": "New", "last_name": "Name", "profile": {}}, format="json")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['email'], "testyy@testyy.com")
+        self.assertEqual(response.data['email'], "testy@testy.com")
         self.assertEqual(response.data['first_name'], "New")
         user = client.get('/api/auth/user/')
-        self.assertEqual(user.data["email"], "testyy@testyy.com")
+        self.assertEqual(user.data["email"], "testy@testy.com")
         self.assertEqual(user.data["first_name"], "New")
     def test_change_school(self):
         createResponse = client.post('/api/auth/reg/', 
@@ -87,7 +97,7 @@ class StudentsSchoolsApiTest(TestCase):
           "image": "No Image",
           "is_student": True,
           "is_teacher": False,
-          "school": self.school1.id},
+          "profile": {"gpa": 1.00, "school": self.school1.id}},
           format="json")
         self.assertEqual(createResponse.status_code, 201)
         self.assertTrue(createResponse.data['key'])
