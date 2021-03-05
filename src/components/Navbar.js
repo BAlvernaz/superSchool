@@ -24,9 +24,7 @@ const Navbar = ({
   loginToggle,
   user,
   signOut,
-  student
 }) => {
-  console.log(user)
   return (
     <div>
       <AppBar position="static">
@@ -68,7 +66,7 @@ const Navbar = ({
           ) : (<div>
               <IconButton
                 component={RouterLink}
-                to={`/students/edit/`}
+                to={`/students/edit/${user.profile.id}`}
                 onClick={() => dialogToggle()}
               >
                 <PersonIcon />
@@ -83,10 +81,9 @@ const Navbar = ({
     </div>
   );
 };
-const stateToProps = ({ user, students }) => {
+const stateToProps = ({ user }) => {
   return {
     user,
-    student: students.find(_student => _student.profile.id === user.pk)
   };
 };
 

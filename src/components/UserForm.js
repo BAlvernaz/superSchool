@@ -144,7 +144,8 @@ class UserForm extends React.Component {
                     />
                   ))
                 : inputs
-                    .filter((name) => !name.includes("password")  || !name.includes("email"))
+                    .filter((name) => !name.includes("password"))
+                    .filter((name) => !name.includes('email'))
                     .map((input, idx) => (
                       <TextField
                         style={{
