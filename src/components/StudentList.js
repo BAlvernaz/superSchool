@@ -4,6 +4,7 @@ import StudentListCard from './StudentListCard'
 
 
 const StudentList = ({ students }) => {
+  console.log(students)
   return (
     <div
       style={{

@@ -160,7 +160,7 @@ AUTHENTICATION_BACKENDS = [
 
 REST_AUTH_SERIALIZERS = {
     "USER_DETAILS_SERIALIZER": "api.serializer.UserDetailsSerializer",
-    'LOGIN_SERIALIZER': 'api.serializer.LoginSerializer'
+
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {

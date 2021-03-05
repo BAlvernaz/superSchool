@@ -51,11 +51,17 @@ class StudentsSchoolsApiTest(TestCase):
           "is_student": True,
           "school": self.school1.id},
           format="json")
+        print(response.__dict__)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(len(User.objects.all()), 2)
         self.assertEqual(len(Student.objects.all()), 2)
         self.assertEqual(response.status_code, 201)
         self.assertTrue(response.data['key'])
+        response2 = client.get('/api/auth/user/')
+        self.assertEqual(response2.data['first_name'], "Blake")
+        self.assertEqual(response2.data['last_name'], "Alvernaz")
+        self.assertEqual(response2.data['image'], "No Image")
+        self.assertEqual(response2.data['email'], "test@test.com")
     def test_login_api(self):
         client.post('/api/auth/reg/', 
         { "email":"test@test.com", 
@@ -80,7 +86,7 @@ class StudentsSchoolsApiTest(TestCase):
         user = client.get('/api/auth/user/')
         self.assertEqual(user.status_code, 200)
         self.assertEqual(user.data['email'], "testy@testy.com")
-        response = client.put("/api/auth/user/", {"email": "testy@testy.com", "first_name": "New", "last_name": "Name", "profile": {}}, format="json")
+        response = client.put("/api/auth/user/", {"email": "testy@testy.com", "first_name": "New", "last_name": "Name", "profile": {}, "image": "No Image"}, format="json")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['email'], "testy@testy.com")
         self.assertEqual(response.data['first_name'], "New")
@@ -97,7 +103,7 @@ class StudentsSchoolsApiTest(TestCase):
           "image": "No Image",
           "is_student": True,
           "is_teacher": False,
-          "profile": {"gpa": 1.00, "school": self.school1.id}},
+          "school": self.school1.id},
           format="json")
         self.assertEqual(createResponse.status_code, 201)
         self.assertTrue(createResponse.data['key'])
@@ -106,7 +112,6 @@ class StudentsSchoolsApiTest(TestCase):
           "last_name": "Alvernaz", 
           "image": "No Image",
           "profile" : {"gpa":1.0, "school": self.school2.id}}, format="json")
-        print(editRes.data)
         self.assertEqual(editRes.status_code,200)
         self.assertEqual(editRes.data['profile']['school'], self.school2.id)
         
