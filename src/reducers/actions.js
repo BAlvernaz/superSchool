@@ -144,17 +144,17 @@ export const userCheck = () => {
   }
 }
 
-  const _editUser = (user) => ({
+  const _editUser = (user, id) => ({
     type: EDIT_USER,
     user,
+    id
   })
   // Updates User Account and Students Profile (User and Students Reducers)
-  export const editUser = ({first_name, last_name, email, image}) => {
+  export const editUser = (data, id) => {
     return async dispatch => {
-      const profile = {first_name, last_name, email, image}
       try {
-        const response  = await axios.put(`http://localhost:8000/api/auth/user/`, profile)
-        dispatch(_editUser(response.data))
+        const response  = await axios.put(`http://localhost:8000/api/auth/user/`, data)
+        dispatch(_editUser(response.data, id))
       } catch (err) {
         // TODO: Change to a Error Reducer
         console.error(err)

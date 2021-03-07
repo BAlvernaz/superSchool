@@ -18,7 +18,7 @@ User = get_user_model()
 class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
-    fields = ["id", "first_name", "last_name", "image", "email"]
+    fields = ["id", "first_name", "last_name", "image", "email",]
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,18 +37,15 @@ class UserDetailsSerializer(UserDetailsSerializer):
   image = serializers.CharField()
 
   class Meta(UserDetailsSerializer.Meta):
-    fields = UserDetailsSerializer.Meta.fields + ('profile', 'image')
+    fields = UserDetailsSerializer.Meta.fields + ('profile', 'image',)
   def update(self, instance, validated_data):
         userprofile_serializer = self.fields['profile']
         userprofile_instance = instance.profile
         userprofile_data = validated_data.pop('profile', {})
-        print(userprofile_data)
         userprofile_serializer.update(userprofile_instance, userprofile_data)
         instance = super().update(instance, validated_data)
         return instance
-
     
-
 class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
       model = School
@@ -71,7 +68,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.image = self.validated_data.get('image', "")
         user.is_student = self.validated_data.get("is_student", True)
         user.is_Teacher = self.validated_data.get("is_teacher", '')
-        print(user)
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)
         self.custom_signup(request, user)

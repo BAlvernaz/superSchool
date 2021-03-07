@@ -97,9 +97,11 @@ class UserForm extends React.Component {
 
   onSubmitEdit(ev) {
     ev.preventDefault();
-    const { first_name, last_name, image, email } = this.state;
+    const { first_name, last_name, image, email, school } = this.state;
+    const { id } = this.props.match.params
     this.props.dialogToggle();
-    this.props.studentEdit({ first_name, last_name, email, image });
+    this.props.studentEdit({ first_name, last_name, email, image, profile: {school, gpa: 0.00}}, id );
+    this.props.history.push("/students");
   }
   render() {
     const { school, password1, password2 } = this.state;
@@ -144,8 +146,7 @@ class UserForm extends React.Component {
                     />
                   ))
                 : inputs
-                    .filter((name) => !name.includes("password"))
-                    .filter((name) => !name.includes('email'))
+                    .filter((name) => !name.includes("password") && !name.includes('email'))
                     .map((input, idx) => (
                       <TextField
                         style={{
@@ -157,7 +158,7 @@ class UserForm extends React.Component {
                         value={this.state[input]}
                         onChange={onChange}
                         name={input}
-                        type={input === "email" ? "email" : "text"}
+                        type="text"
                       />
                     ))}
             </div>
@@ -267,17 +268,18 @@ class UserForm extends React.Component {
   }
 }
 
-const stateToProps = ({}, { student, history }) => {
+const stateToProps = ({}, { student, history, match }) => {
   return {
     student,
     history,
+    match,
   };
 };
 
 const dispatchToProps = (dispatch) => {
   return {
     newStudent: (data) => dispatch(addStudent(data)),
-    studentEdit: (data) => dispatch(editUser(data)),
+    studentEdit: (data, id) => dispatch(editUser(data, id)),
     dialogToggle: () => dispatch(toggleDialog()),
   };
 };

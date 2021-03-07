@@ -10,14 +10,13 @@ import { connect } from "react-redux";
 import { toggleDialog } from "../reducers/toggleActions";
 import UserForm from "./UserForm";
 
-const UserDialog = ({ student, dialogToggle, toggle, history }) => {
+const UserDialog = ({ student, dialogToggle, toggle, history, match }) => {
   return (
     <div>
       <Dialog
         open={toggle}
         onClose={() => {
           dialogToggle();
-          history.push("/students");
         }}
       >
         <DialogTitle style={{ textAlign: "center" }}>
@@ -38,7 +37,7 @@ const UserDialog = ({ student, dialogToggle, toggle, history }) => {
           <h3 style={{ margin: 0 }}>Profile Information</h3>
         </DialogTitle>
         <DialogContent>
-          <UserForm student={student} history={history} />
+          <UserForm student={student} history={history} match={match}/>
         </DialogContent>
       </Dialog>
     </div>
@@ -52,6 +51,7 @@ const stateToProps = ({ students, toggles }, { match, history }) => {
       : null,
     toggle: toggles.userFormDialog,
     history,
+    match
   };
 };
 const dispatchToProps = (dispatch) => {

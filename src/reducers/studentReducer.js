@@ -13,10 +13,11 @@ export const studentReducer = (state = [], action) => {
       break;
     case EDIT_USER:
       state = [...state].map(student => {
-        if (student.profile.id !== action.user.id) {
+        if (student.id !== action.id) {
           return student
         }
-          return {...student, profile: {...student.profile, ...action.user}}
+        const {first_name, last_name, image, email, pk} = action.user
+          return {...action.user.profile, profile : {id: pk, first_name, last_name, image, email}}
     
   })
   break;

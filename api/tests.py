@@ -12,11 +12,6 @@ client = APIClient()
 class UserandAuthenicationTest(TestCase):
     def setUp(self):
         self.school1 = School.objects.create(name="Test School 1")
-    def test_create_user(self):
-      testStudentUser = User.objects.create_user("Test@test.com", "password", self.school1.id, first_name="Test", last_name="Testy", is_student=True, image="No Image", is_teacher=False)
-      self.assertEqual(testStudentUser.get_full_name(), "Test Testy")
-      self.assertTrue(testStudentUser.is_student)
-      self.assertEqual(len(Student.objects.all()), 1)
     def test_create_superuser(self):
       testSuperUser = User.objects.create_superuser("super@super.com","password", first_name="Super", last_name="User", image="No Image")
       self.assertEqual(testSuperUser.get_full_name(), "Super User")
@@ -51,7 +46,6 @@ class StudentsSchoolsApiTest(TestCase):
           "is_student": True,
           "school": self.school1.id},
           format="json")
-        print(response.__dict__)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(len(User.objects.all()), 2)
         self.assertEqual(len(Student.objects.all()), 2)
@@ -62,6 +56,8 @@ class StudentsSchoolsApiTest(TestCase):
         self.assertEqual(response2.data['last_name'], "Alvernaz")
         self.assertEqual(response2.data['image'], "No Image")
         self.assertEqual(response2.data['email'], "test@test.com")
+        print(response2.data.__dict__)
+        self.assertEqual(response2.data['full_name'], "Blake Alvernaz")
     def test_login_api(self):
         client.post('/api/auth/reg/', 
         { "email":"test@test.com", 
