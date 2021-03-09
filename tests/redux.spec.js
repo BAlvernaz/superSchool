@@ -106,7 +106,7 @@ describe("Students Reducer", () => {
         [
           {
             id: student1UUID,
-            profile: { id: 1, first_name: "Test", last_name: "Student 1" },
+            profile: { id: 1, first_name: "Test", last_name: "Student 1", image: "No Image", email: "test@test.com" },
             school: school1UUID,
           },
           {
@@ -118,17 +118,22 @@ describe("Students Reducer", () => {
         {
           type: EDIT_USER,
           user: {
-            id: 1,
+            pk: 1,
             first_name: "Blake",
             last_name: "Alvernaz",
+            image: "No Image", 
+            email: "test@test.com",
+            profile: {id: student1UUID, school: school1UUID, gpa: 0.00}
           },
+          id: student1UUID
         }
       )
     ).toEqual([
       {
         id: student1UUID,
-        profile: { id: 1, first_name: "Blake", last_name: "Alvernaz" },
+        profile: { id: 1, first_name: "Blake", last_name: "Alvernaz", image: "No Image", email: "test@test.com" },
         school: school1UUID,
+        gpa: 0.00
       },
       {
         id: student2UUID,

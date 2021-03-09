@@ -63,7 +63,7 @@ const Navbar = ({
                 Login
               </Button>
             </ButtonGroup>
-          ) : (<div>
+          ) :  user.profile ? (<div>
               <IconButton
                 component={RouterLink}
                 to={`/students/edit/${user.profile.id}`}
@@ -75,7 +75,9 @@ const Navbar = ({
                 Logout
               </Button>
               </div>
-          )}
+          ) : <Button variant="contained" onClick={() => signOut()}>
+          Logout
+        </Button> }
         </Toolbar>
       </AppBar>
     </div>

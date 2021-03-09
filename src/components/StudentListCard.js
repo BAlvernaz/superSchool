@@ -13,7 +13,6 @@ const StudentListCard = ({
   schools,
 
 }) => {
-  console.log(student)
   return (
     <Card
       style={{

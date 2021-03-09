@@ -2,6 +2,7 @@ from api.models import Student, School
 from api.serializer import StudentSerializer, SchoolSerializer, StudentProfileSerializer
 from rest_framework import generics, permissions
 from django.contrib.auth import get_user_model
+from api.permissions import isAuthenticatedStudent
 
 
 User = get_user_model()
@@ -20,6 +21,7 @@ class StudentCreate(generics.CreateAPIView):
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentProfileSerializer
+    permission_classes = [isAuthenticatedStudent]
 
 class SchoolList(generics.ListCreateAPIView):
     queryset = School.objects.all()

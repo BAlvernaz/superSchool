@@ -24,7 +24,7 @@ class StudentsSchoolsApiTest(TestCase):
         self.factory = APIRequestFactory()
         self.school1 = School.objects.create(name="Test School 1", image='no')
         self.school2 = School.objects.create(name="Test School 2")
-        User.objects.create_user("testy@testy.com", "password", self.school1.id)
+        self.firstStudent =  User.objects.create_user("testy@testy.com", "password", self.school1.id)
     def test_get_schools(self):
         request = self.factory.get('/api/schools/')
         response = SchoolList.as_view()(request)
@@ -56,8 +56,7 @@ class StudentsSchoolsApiTest(TestCase):
         self.assertEqual(response2.data['last_name'], "Alvernaz")
         self.assertEqual(response2.data['image'], "No Image")
         self.assertEqual(response2.data['email'], "test@test.com")
-        print(response2.data.__dict__)
-        self.assertEqual(response2.data['full_name'], "Blake Alvernaz")
+
     def test_login_api(self):
         client.post('/api/auth/reg/', 
         { "email":"test@test.com", 
@@ -110,4 +109,46 @@ class StudentsSchoolsApiTest(TestCase):
           "profile" : {"gpa":1.0, "school": self.school2.id}}, format="json")
         self.assertEqual(editRes.status_code,200)
         self.assertEqual(editRes.data['profile']['school'], self.school2.id)
+    def test_remove_student(self):
+        client.post('/api/auth/reg/', 
+        { "email":"test@test.com", 
+          "password1":"10wer1232",
+          "password2":"10wer1232",
+          "first_name": "Blake",
+          "last_name": "Alvernaz", 
+          "image": "No Image",
+          "is_student": True,
+          "school": self.school1.id},
+          format="json")
+        client.post('/api/auth/reg/', 
+        { "email":"test2@test.com", 
+          "password1":"10wer1232",
+          "password2":"10wer1232",
+          "first_name": "John",
+          "last_name": "Doe", 
+          "image": "No Image",
+          "is_student": True,
+          "school": self.school1.id},
+          format="json")
+        self.assertEqual(len(Student.objects.all()), 3)
+        self.assertEqual(len(User.objects.all()), 3)
+        login = client.post('/api/auth/login/', {"email":"test@test.com", "password":"10wer1232"})
+        user_info = client.get('/api/auth/user/')
+        self.assertEqual(user_info.status_code, 200)
+        self.assertEqual(user_info.data['email'], "test@test.com" )
+        delete_res = client.delete('/api/students/{}/'.format(user_info.data['profile']['id']))
+        self.assertEqual(delete_res.status_code, 204)
+        self.assertEqual(len(Student.objects.all()), 2)
+        self.assertEqual(len(User.objects.all()), 3)
+        client.post('/api/auth/logout/')
+        client.post('/api/auth/login/', {"email":"test2@test.com", "password":"10wer1232"})
+        #No other Person should be able to delete another Student account
+        failDelete = client.delete('/api/students/{}/'.format(self.firstStudent.profile.id))
+        self.assertEqual(failDelete.status_code, 403)
+        self.assertEqual(len(Student.objects.all()), 2)
+        self.assertEqual(len(User.objects.all()), 3)
+
+        
+
+
         

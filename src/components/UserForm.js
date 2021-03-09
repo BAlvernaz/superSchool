@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { addStudent, editUser } from "../reducers/actions";
+import { addStudent, editUser, removeStudent, logout } from "../reducers/actions";
 import { toggleDialog } from "../reducers/toggleActions";
 import SchoolSelect from "./SchoolSelect";
 
@@ -39,6 +39,7 @@ class UserForm extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSubmitEdit = this.onSubmitEdit.bind(this);
+    this.onDelete = this.onDelete.bind(this)
   }
 
   componentDidMount() {
@@ -95,6 +96,13 @@ class UserForm extends React.Component {
     this.props.history.push("/students");
   }
 
+  onDelete () {
+    const { dialogToggle, deleteStudent, history, signOut } = this.props
+    dialogToggle()
+    deleteStudent(this.props.match.params.id)
+    signOut()
+    history.push('students')
+  }
   onSubmitEdit(ev) {
     ev.preventDefault();
     const { first_name, last_name, image, email, school } = this.state;
@@ -106,7 +114,7 @@ class UserForm extends React.Component {
   render() {
     const { school, password1, password2 } = this.state;
     const { student } = this.props;
-    const { onSubmit, onChange, onSubmitEdit } = this;
+    const { onSubmit, onChange, onSubmitEdit, onDelete } = this;
     return (
       <div style={{ padding: 0 }}>
         <form onSubmit={student ? onSubmitEdit : onSubmit}>
@@ -257,7 +265,7 @@ class UserForm extends React.Component {
               >
                 Edit Profile Data
               </Button>
-              <Button style={{ backgroundColor: "red" }}>
+              <Button style={{ backgroundColor: "red" }} onClick={onDelete}>
                 Delete Student
               </Button>
             </ButtonGroup>
@@ -280,6 +288,8 @@ const dispatchToProps = (dispatch) => {
   return {
     newStudent: (data) => dispatch(addStudent(data)),
     studentEdit: (data, id) => dispatch(editUser(data, id)),
+    deleteStudent: (id) => dispatch(removeStudent(id)),
+    signOut: () => dispatch(logout()),
     dialogToggle: () => dispatch(toggleDialog()),
   };
 };
