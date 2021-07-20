@@ -17,6 +17,7 @@ django-allauth==0.42.0
 django-cors-headers==3.5.0
 django-seed==0.2.2
 djangorestframework==3.12.1
+djangorestframework-simplejwt==4.7.2
 docopt==0.6.2
 Faker==4.14.0
 html5lib==1.0.1
@@ -35,7 +36,7 @@ progress==1.5
 psycopg2==2.8.6
 py==1.9.0
 pycparser==2.20
-PyJWT==1.7.1
+PyJWT==2.1.0
 pyparsing==2.4.7
 pytest==6.1.2
 pytest-django==4.1.0

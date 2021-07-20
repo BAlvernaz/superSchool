@@ -1,7 +1,7 @@
 import axios from "axios";
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.withCredentials = true;
+// axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+// axios.defaults.xsrfCookieName = "csrftoken";
+// axios.defaults.withCredentials = true;
 
 // Student Actions 
 const GET_STUDENTS = "GET_STUDENTS";
